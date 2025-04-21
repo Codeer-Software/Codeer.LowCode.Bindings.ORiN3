@@ -26,256 +26,56 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
             public async Task CaseOfBoolAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<bool>)_variable).GetValueAsync(token));
             public async Task CaseOfBoolArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<bool[]>)_variable).GetValueAsync(token));
-
-            public Task CaseOfNullableBoolAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableBoolArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfInt8Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfInt8ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableInt8Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableInt8ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfInt16Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfInt16ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableInt16Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableInt16ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfInt32Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfInt32ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableInt32Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableInt32ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfInt64Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfInt64ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableInt64Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableInt64ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfUInt8Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfUInt8ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableUInt8Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableUInt8ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfUInt16Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfUInt16ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableUInt16Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableUInt16ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfUInt32Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfUInt32ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableUInt32Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableUInt32ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfUInt64Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfUInt64ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableUInt64Async(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableUInt64ArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfFloatAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfFloatArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableFloatAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableFloatArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfDoubleAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfDoubleArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableDoubleAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableDoubleArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfStringAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfStringArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfDateTimeAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfDateTimeArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableDateTimeAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfNullableDateTimeArrayAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfObjectAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
-
-            public Task CaseOfErrorAsync(CancellationToken token)
-            {
-                throw new NotImplementedException();
-            }
+            public async Task CaseOfNullableBoolAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<bool?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableBoolArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<bool?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfInt8Async(CancellationToken token) => Value = MultiTypeValue.Create(await((IVariable<sbyte>)_variable).GetValueAsync(token));
+            public async Task CaseOfInt8ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<sbyte[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableInt8Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<sbyte?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableInt8ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<sbyte?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfInt16Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<short>)_variable).GetValueAsync(token));
+            public async Task CaseOfInt16ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<short[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableInt16Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<short?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableInt16ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<short?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfInt32Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<int>)_variable).GetValueAsync(token));
+            public async Task CaseOfInt32ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<int[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableInt32Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<int?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableInt32ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<int?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfInt64Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<long>)_variable).GetValueAsync(token));
+            public async Task CaseOfInt64ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<long[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableInt64Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<long?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableInt64ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<long?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfUInt8Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<byte>)_variable).GetValueAsync(token));
+            public async Task CaseOfUInt8ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<byte[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableUInt8Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<byte?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableUInt8ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<byte?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfUInt16Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<ushort>)_variable).GetValueAsync(token));
+            public async Task CaseOfUInt16ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<ushort[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableUInt16Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<ushort?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableUInt16ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<ushort?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfUInt32Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<uint>)_variable).GetValueAsync(token));
+            public async Task CaseOfUInt32ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<uint[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableUInt32Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<uint?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableUInt32ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable <uint?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfUInt64Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<ulong>)_variable).GetValueAsync(token));
+            public async Task CaseOfUInt64ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<ulong[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableUInt64Async(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<ulong?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableUInt64ArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<ulong?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfFloatAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<float>)_variable).GetValueAsync(token));
+            public async Task CaseOfFloatArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<float[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableFloatAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<float?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableFloatArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<float?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfDoubleAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<double>)_variable).GetValueAsync(token));
+            public async Task CaseOfDoubleArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<double[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableDoubleAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<double?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableDoubleArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<double?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfStringAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<string>)_variable).GetValueAsync(token));
+            public async Task CaseOfStringArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<string[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfDateTimeAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<DateTime>)_variable).GetValueAsync(token));
+            public async Task CaseOfDateTimeArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<DateTime[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableDateTimeAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<DateTime?>)_variable).GetValueAsync(token));
+            public async Task CaseOfNullableDateTimeArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<DateTime?[]>)_variable).GetValueAsync(token));
+            public async Task CaseOfObjectAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<object>)_variable).GetValueAsync(token));
+            public Task CaseOfErrorAsync(CancellationToken token) => throw new Exception();
         }
 
         ORiN3FieldDesign? _design;
