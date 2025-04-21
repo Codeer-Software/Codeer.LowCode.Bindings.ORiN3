@@ -19,7 +19,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         {
             private readonly IVariable _variable;
 
-            public MultiTypeValue Value { get; private set; }
+            public MultiTypeValue Value { get; private set; } = MultiTypeValue.Create(null);
 
             public CreateMultiTypeValueBranch(IVariable variable)
             {
