@@ -65,7 +65,7 @@
     },
     {
       "PollingTime": 1000,
-      "SettingJson": "",
+      "SettingJson": "{\r\n  \"aaa\": \"bbb\"\r\n}",
       "Name": "ORiN3",
       "ClassName": "",
       "ContextMenu": "",

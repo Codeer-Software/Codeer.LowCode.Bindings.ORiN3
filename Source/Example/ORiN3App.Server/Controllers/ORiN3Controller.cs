@@ -22,7 +22,7 @@ namespace ORiN3App.Server.Controllers
                 orin3 = e.Fields.OfType<ORiN3FieldDesign>().FirstOrDefault();
                 if (orin3 != null) break;
             }
-            oRiN3IO.SetDesign(orin3);
+            await oRiN3IO.SetDesignAsync(orin3);
             return await oRiN3IO.GetValuesAsync(devices);
         }
     }
