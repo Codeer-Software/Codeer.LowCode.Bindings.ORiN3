@@ -3,11 +3,13 @@ using Codeer.LowCode.Blazor.Repository;
 using Design.ORiN3.Common.V1;
 using Design.ORiN3.Provider.Core.V1.Telemetry;
 using Design.ORiN3.Provider.V1;
-using Design.ORiN3.RemoteEngineEx.V1;
+using Design.ORiN3.Provider.V1.Base;
+using Design.ORiN3.Provider.V1.Characteristic;
 using Grpc.Net.Client;
 using Message.Client.ORiN3.Provider.V1;
 using Message.Client.ORiN3.RemoteEngine.V1;
 using Message.ORiN3.Provider.V1.Branch.Switcher;
+using System.Text.Json;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Server
 {
@@ -82,23 +84,20 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         readonly Random _random = new Random();
         readonly IDictionary<string, IVariable> _variables = new Dictionary<string, IVariable>();
 
-        private static async Task<IRemoteEngineEx> ConnectToRemoteEngineAsync(string endpoint, CancellationToken token)
+        private static async Task<IRootObject> WakeupProviderAsync(string host, int port, string providerId, string providerVersion, int providerPort, CancellationToken token)
         {
-            var channel = GrpcChannel.ForAddress(endpoint);
-            return await RemoteEngine.AttachAsync(channel, uint.MaxValue, token);
-        }
+            using var channel = GrpcChannel.ForAddress($"http://{host}:{port}/");
+            using var remoteEngine = await RemoteEngine.AttachAsync(channel, uint.MaxValue, token);
 
-        private static async Task<IRootObject> WakeupProviderAsync(IRemoteEngineEx remoteEngine, CancellationToken token)
-        {
             // Launching Provider
-            var providerEndpoints = new ProviderEndpoint[] { new(0, "127.0.0.1", 0, []) };
-            var telemetryEndpoints = new TelemetryEndpoint[] { };
+            var providerEndpoints = new ProviderEndpoint[] { new(0, host, providerPort, []) };
+            var telemetryEndpoints = Array.Empty<TelemetryEndpoint>();
             var telemetryAttributes = new Dictionary<string, string> { };
             var telemetryOption = new TelemetryOption(true, telemetryEndpoints, telemetryAttributes);
             var extensions = new Dictionary<string, string> { };
             var wakeupProviderResult = await remoteEngine.WakeupProviderAsync(
-                id: "643D12C8-DCFC-476C-AA15-E8CA004F48E8",
-                version: "1.0.85",
+                id: providerId,
+                version: providerVersion,
                 threadSafeMode: true,
                 endpoints: providerEndpoints,
                 logLevel: ORiN3LogLevel.Information,
@@ -106,20 +105,23 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 extension: extensions,
                 token: token);
 
-            var providerPort = wakeupProviderResult.ProviderInformation.EndPoints
-                .Where(x => Uri.TryCreate(x.Uri, UriKind.Absolute, out _))
-                .Select(x => new Uri(x.Uri))
-                .First(x => x.Host == "127.0.0.1")
-                .Port;
+            if (providerPort == 0)
+            {
+                providerPort = wakeupProviderResult.ProviderInformation.EndPoints
+                    .Where(x => Uri.TryCreate(x.Uri, UriKind.Absolute, out _))
+                    .Select(x => new Uri(x.Uri))
+                    .First(x => x.Host == host)
+                    .Port;
+            }
 
             // Attach RootObject
-            var providerChannel = GrpcChannel.ForAddress($"http://127.0.0.1:{providerPort}");
+            var providerChannel = GrpcChannel.ForAddress($"http://{host}:{providerPort}");
             return await ORiN3RootObject.AttachAsync(providerChannel, uint.MaxValue, token);
         }
 
         public async Task SetDesignAsync(ORiN3FieldDesign? design)
         {
-            if (ReferenceEquals(_design, design))
+            if (design == null || ReferenceEquals(_design, design))
             {
                 return;
             }
@@ -128,27 +130,48 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
             using var cts = new CancellationTokenSource();
 
-            // Connect to Remote Engine
-            using var remoteEngine = await ConnectToRemoteEngineAsync("http://127.0.0.1:7103/", cts.Token);
-
             // Launching Provider
-            var root = await WakeupProviderAsync(remoteEngine, cts.Token);
+            var root = await WakeupProviderAsync(design.RemoteEngineHost, design.RemoteEnginePort, design.ProviderId, design.ProviderVersion, design.ProviderPort, cts.Token);
 
-            // Create object
-            var controller = await root.CreateControllerAsync(
-                name: "GeneralPurposeController",
-                typeName: "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Controller.GeneralPurposeController, ORiN3.Provider.ORiNConsortium.Mock",
-                option: "{\"@Version\":\"1.0.85\"}",
-                token: cts.Token);
+            var parents = new Dictionary<string, IORiN3Object>();
+            foreach (var it in design.ORiN3Objects)
+            {
+                using var setting = JsonDocument.Parse(it);
+                var rootElement = setting.RootElement;
+                var parent = rootElement.GetProperty("parent").GetString();
+                var key = rootElement.GetProperty("key").GetString()!;
+                var name = rootElement.GetProperty("name").GetString()!;
+                var typeName = rootElement.GetProperty("typeName").GetString()!;
+                var option = rootElement.GetProperty("option").GetString()!;
+                var objectType = rootElement.GetProperty("objectType").GetString();
+                var variableType = rootElement.TryGetProperty("variableType", out var prop) ? prop.GetString() : null;
 
-            // Create object
-            var variable = await controller.CreateVariableAsync<bool>(
-                name: "BoolVariable",
-                typeName: "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Variable.BoolVariable, ORiN3.Provider.ORiNConsortium.Mock",
-                option: "{\"@Version\":\"1.0.85\"}",
-                token: cts.Token);
-
-            _variables["R1"] = variable;
+                if (objectType == "Controller")
+                {
+                    var controller = await ((IControllerCreator)(parent == null ? root : parents[parent])).CreateControllerAsync(
+                        name: name,
+                        typeName: typeName,
+                        option: option,
+                        token: cts.Token);
+                    parents.Add(name, controller);
+                }
+                else if (objectType == "Variable")
+                {
+                    if (variableType == "bool")
+                    {
+                        var variable = await ((IChildCreator)(parent == null ? root : parents[parent])).CreateVariableAsync<bool>(
+                            name: name,
+                            typeName: typeName,
+                            option: option,
+                            token: cts.Token);
+                        _variables.Add(key, variable);
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
+                    }
+                }
+            }
         }
 
         public async Task<Dictionary<string, MultiTypeValue>> GetValuesAsync(List<string> devices)
