@@ -1,0 +1,32 @@
+@using Codeer.LowCode.Bindings.ORiN3.Designs
+@using Codeer.LowCode.Bindings.ORiN3.Fields
+@using Codeer.LowCode.Blazor.Components
+@inherits FieldComponentBase<ORiN3MonitorField>
+
+@if (Field.Services.AppInfoService.IsDesignMode)
+{
+  <span>ORiN3Monitor</span>
+}
+
+@code {
+  private System.Timers.Timer? _timer;
+
+  protected override void OnInitialized()
+  {
+    if (Field.Services.AppInfoService.IsDesignMode) return;
+    _timer = new System.Timers.Timer(Field.Design.PollingTime);
+    _timer.Elapsed += OnTimerElapsed;
+    _timer.AutoReset = true;
+    _timer.Start();
+  }
+
+  private async void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
+  {
+      await Field.PollingMonitor();
+  }
+
+  public void Dispose()
+  {
+    _timer?.Dispose();
+  }
+}

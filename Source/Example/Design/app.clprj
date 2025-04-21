@@ -1,0 +1,19 @@
+{
+  "CurrentUserModuleDesignName": "",
+  "AppAccessConditions": {
+    "ModuleName": ""
+  },
+  "BackgroundColor": "",
+  "Color": "",
+  "FontFamily": "",
+  "Versions": [
+    {
+      "AssemblyName": "Codeer.LowCode.Bindings.ORiN3",
+      "Version": "1.0.0.0"
+    },
+    {
+      "AssemblyName": "Codeer.LowCode.Blazor",
+      "Version": "1.2.1.0"
+    }
+  ]
+}
