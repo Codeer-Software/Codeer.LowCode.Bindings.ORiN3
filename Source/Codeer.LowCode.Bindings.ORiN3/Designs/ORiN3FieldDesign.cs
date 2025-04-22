@@ -1,11 +1,22 @@
 ﻿using Codeer.LowCode.Bindings.ORiN3.Components;
 using Codeer.LowCode.Bindings.ORiN3.Fields;
+using Codeer.LowCode.Blazor.DataIO;
 using Codeer.LowCode.Blazor.OperatingModel;
 using Codeer.LowCode.Blazor.Repository.Data;
 using Codeer.LowCode.Blazor.Repository.Design;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Designs
 {
+    //public class ORiN3Field(ORiN3FieldDesign design)
+    //    : FieldBase<ORiN3FieldDesign>(design)
+    //{
+    //    public override bool IsModified => false;
+    //    public override FieldDataBase? GetData() => null;
+    //    public override FieldSubmitData GetSubmitData() => new();
+    //    public override async Task InitializeDataAsync(FieldDataBase? fieldDataBase) => await Task.CompletedTask;
+    //    public override async Task SetDataAsync(FieldDataBase? fieldDataBase) => await Task.CompletedTask;
+    //}
+
     [ToolboxIcon(PackIconMaterialKind = "ProgressStar")]
     public class ORiN3FieldDesign() : FieldDesignBase(typeof(ORiN3FieldDesign).FullName!)
     {
@@ -15,6 +26,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Designs
         public string RemoteEngineHost { get; set; } = "127.0.0.1";
         [Designer(Category = "ORiN3 Remote Engine", DisplayName = "Remote Engine Port", CandidateType = CandidateType.Variable)]
         public int RemoteEnginePort { get; set; } = 7103;
+
+        [Designer(Category = "ORiN3 Provider", DisplayName = "Provider", CandidateType = CandidateType.ScriptEvent)]
+        public string Provider { get; set; } = string.Empty;
 
         [Designer(Category = "ORiN3 Provider", DisplayName = "Provider Id", CandidateType = CandidateType.Variable)]
         public string ProviderId { get; set; } = "643D12C8-DCFC-476C-AA15-E8CA004F48E8";
