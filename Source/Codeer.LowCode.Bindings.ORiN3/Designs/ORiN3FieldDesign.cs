@@ -11,9 +11,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Designs
     {
         public int PollingTime { get; set; } = 1000;
 
-        [Designer(Category = "ORiN3 Configurator", DisplayName = "O3 Json", CandidateType = CandidateType.Variable)]
+        [Designer(Category = "ORiN3 Configurator", DisplayName = "O3 Json", CandidateType = CandidateType.Resource)]
         public string O3JsonFilePath { get; set; } = string.Empty;
-        [Designer(Category = "ORiN3 Configurator", DisplayName = "O3 Tree Json", CandidateType = CandidateType.Variable)]
+        [Designer(Category = "ORiN3 Configurator", DisplayName = "O3 Tree Json", CandidateType = CandidateType.Resource)]
         public string O3TreeJsonFilePath { get; set; } = string.Empty;
 
         [Designer(Category = "ORiN3 Remote Engine", DisplayName = "Remote Engine Host", CandidateType = CandidateType.Variable)]
