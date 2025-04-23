@@ -1,26 +1,20 @@
 ﻿using Codeer.LowCode.Bindings.ORiN3.Components;
 using Codeer.LowCode.Bindings.ORiN3.Fields;
-using Codeer.LowCode.Blazor.DataIO;
 using Codeer.LowCode.Blazor.OperatingModel;
 using Codeer.LowCode.Blazor.Repository.Data;
 using Codeer.LowCode.Blazor.Repository.Design;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Designs
 {
-    //public class ORiN3Field(ORiN3FieldDesign design)
-    //    : FieldBase<ORiN3FieldDesign>(design)
-    //{
-    //    public override bool IsModified => false;
-    //    public override FieldDataBase? GetData() => null;
-    //    public override FieldSubmitData GetSubmitData() => new();
-    //    public override async Task InitializeDataAsync(FieldDataBase? fieldDataBase) => await Task.CompletedTask;
-    //    public override async Task SetDataAsync(FieldDataBase? fieldDataBase) => await Task.CompletedTask;
-    //}
-
     [ToolboxIcon(PackIconMaterialKind = "ProgressStar")]
     public class ORiN3FieldDesign() : FieldDesignBase(typeof(ORiN3FieldDesign).FullName!)
     {
         public int PollingTime { get; set; } = 1000;
+
+        [Designer(Category = "ORiN3 Configurator", DisplayName = "O3 Json", CandidateType = CandidateType.Variable)]
+        public string O3JsonFilePath { get; set; } = string.Empty;
+        [Designer(Category = "ORiN3 Configurator", DisplayName = "O3 Tree Json", CandidateType = CandidateType.Variable)]
+        public string O3TreeJsonFilePath { get; set; } = string.Empty;
 
         [Designer(Category = "ORiN3 Remote Engine", DisplayName = "Remote Engine Host", CandidateType = CandidateType.Variable)]
         public string RemoteEngineHost { get; set; } = "127.0.0.1";

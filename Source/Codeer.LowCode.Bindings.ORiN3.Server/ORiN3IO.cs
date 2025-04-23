@@ -1,18 +1,16 @@
 ﻿using Codeer.LowCode.Bindings.ORiN3.Designs;
-using Codeer.LowCode.Bindings.ORiN3.Server.TypeBranch;
 using Codeer.LowCode.Blazor.Repository;
-using Design.ORiN3.Provider.V1;
+using Colda.CommonUtilities.Tasks;
 using Design.ORiN3.Provider.V1.Base;
-using Message.ORiN3.Provider.V1.Branch.Switcher;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Server
 {
-
     public class ORiN3IO
     {
         ORiN3FieldDesign? _design;
         readonly Random _random = new();
         ORiN3Provider _provider;
+        AsyncLock _lock = new();
 
         private static async Task<ORiN3Provider> WakeupProviderAsync(string host, int port, string providerId, string providerVersion, int providerPort, CancellationToken token)
         {
@@ -22,47 +20,50 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
         public async Task SetDesignAsync(ORiN3FieldDesign? design)
         {
-            if (design == null || ReferenceEquals(_design, design))
+            using (await _lock.LockAsync())
             {
-                return;
-            }
+                if (design == null || ReferenceEquals(_design, design))
+                {
+                    return;
+                }
 
-            _design = design;
+                _design = design;
 
-            using var cts = new CancellationTokenSource();
+                using var cts = new CancellationTokenSource();
 
-            // Launching Provider
-            _provider = await WakeupProviderAsync(design.RemoteEngineHost, design.RemoteEnginePort, design.ProviderId, design.ProviderVersion, design.ProviderPort, cts.Token);
+                // Launching Provider
+                _provider = await WakeupProviderAsync(design.RemoteEngineHost, design.RemoteEnginePort, design.ProviderId, design.ProviderVersion, design.ProviderPort, cts.Token);
 
-            var parents = new Dictionary<string, IORiN3Object>();
-            foreach (var it in design.ORiN3Objects)
-            {
-                await _provider.CreateObjectAsync(it, cts.Token);
+                var parents = new Dictionary<string, IORiN3Object>();
+                foreach (var it in design.ORiN3Objects)
+                {
+                    await _provider.CreateObjectAsync(it, cts.Token);
+                }
             }
         }
 
         public async Task<Dictionary<string, MultiTypeValue>> GetValuesAsync(List<string> devices)
         {
-            //TODO: kakei
-            var texts = new[] { "a", "b", "c", "d", "e" };
-
-
-
-            var dic = new Dictionary<string, MultiTypeValue>();
-
-            if (_provider == null)
+            using (await _lock.LockAsync())
             {
-                dic["R1"] = MultiTypeValue.Create(false);
+                //TODO: kakei
+                var texts = new[] { "a", "b", "c", "d", "e" };
+                var dic = new Dictionary<string, MultiTypeValue>();
+
+                if (_provider == null)
+                {
+                    dic["R1"] = MultiTypeValue.Create(false);
+                    dic["D1"] = MultiTypeValue.Create(_random.Next(10000));
+                    dic["D2"] = MultiTypeValue.Create(texts[_random.Next(texts.Length)]);
+                    return dic;
+                }
+
+                dic["R1"] = await _provider.GetValueAsync("R1", CancellationToken.None);
                 dic["D1"] = MultiTypeValue.Create(_random.Next(10000));
                 dic["D2"] = MultiTypeValue.Create(texts[_random.Next(texts.Length)]);
+                await Task.CompletedTask;
                 return dic;
             }
-
-            dic["R1"] = await _provider.GetValueAsync("R1", CancellationToken.None);
-            dic["D1"] = MultiTypeValue.Create(_random.Next(10000));
-            dic["D2"] = MultiTypeValue.Create(texts[_random.Next(texts.Length)]);
-            await Task.CompletedTask;
-            return dic;
         }
     }
 }
