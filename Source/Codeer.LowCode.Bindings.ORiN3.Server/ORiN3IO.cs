@@ -11,6 +11,10 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         readonly Random _random = new();
         ORiN3Provider _provider;
         AsyncLock _lock = new();
+        string _designFileDirector;
+
+        public ORiN3IO(string designFileDirectory)
+            => _designFileDirector = designFileDirectory;
 
         private static async Task<ORiN3Provider> WakeupProviderAsync(string host, int port, string providerId, string providerVersion, int providerPort, CancellationToken token)
         {

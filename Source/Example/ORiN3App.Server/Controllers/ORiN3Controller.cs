@@ -11,7 +11,7 @@ namespace ORiN3App.Server.Controllers
     [Route("api/orin3")]
     public class ORiN3Controller : ControllerBase
     {
-        static ORiN3IO oRiN3IO = new ORiN3IO();
+        static ORiN3IO oRiN3IO = new ORiN3IO(SystemConfig.Instance.DesignFileDirectory);
 
         [HttpPost("values")]
         public async Task<Dictionary<string, MultiTypeValue>> GetValuesAsync(List<string> devices)
