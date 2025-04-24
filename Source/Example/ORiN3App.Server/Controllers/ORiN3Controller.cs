@@ -2,7 +2,6 @@ using Codeer.LowCode.Bindings.ORiN3.Designs;
 using Codeer.LowCode.Bindings.ORiN3.Fields;
 using Codeer.LowCode.Bindings.ORiN3.Server;
 using Codeer.LowCode.Blazor.DesignLogic;
-using Codeer.LowCode.Blazor.Repository;
 using Microsoft.AspNetCore.Mvc;
 using ORiN3App.Server.Services;
 
@@ -17,14 +16,15 @@ namespace ORiN3App.Server.Controllers
         [HttpPost("values")]
         public async Task<Dictionary<string, ORiN3IOResult>> GetValuesAsync(List<string> devices)
         {
-            ORiN3FieldDesign? orin3 = null;
-            foreach (var e in DesignerService.GetDesignData().Modules.ToList())
+            Dictionary<string, ORiN3FieldDesign> orin3Dic = new();
+            foreach (var mod in DesignerService.GetDesignData().Modules.ToList())
             {
-                orin3 = e.Fields.OfType<ORiN3FieldDesign>().FirstOrDefault();
-                if (orin3 != null) break;
+                foreach (var orin3 in mod.Fields.OfType<ORiN3FieldDesign>())
+                {
+                    orin3Dic[$"{mod.Name}.{orin3.Name}"] = orin3;
+                }
             }
-
-            await orin3IO.SetDesignAsync(orin3);
+            await orin3IO.SetDesignAsync(orin3Dic);
             return await orin3IO.GetValuesAsync(devices);
         }
     }

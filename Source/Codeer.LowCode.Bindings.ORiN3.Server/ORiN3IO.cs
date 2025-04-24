@@ -21,8 +21,11 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         private CancellationTokenSource? _updateBufferTaskCancellationTokenSource;
         private int _counter;
 
-        public async Task SetDesignAsync(ORiN3FieldDesign? design)
+        public async Task SetDesignAsync(Dictionary<string, ORiN3FieldDesign> designs)
         {
+            //TODO : kakei
+            var design = designs.First().Value;
+
             using var cts = new CancellationTokenSource();
             using (await _asyncLock.LockAsync(cts.Token).ConfigureAwait(false))
             {
