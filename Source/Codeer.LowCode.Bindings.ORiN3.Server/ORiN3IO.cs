@@ -9,13 +9,13 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 {
     public class ORiN3IO
     {
-        ORiN3FieldDesign? _design;
-        readonly Random _random = new();
-        IList<ORiN3Provider> _providers = [];
-        AsyncLock _lock = new();
-        string _designFileDirector;
-        O3Setting _o3Setting;
-        O3TreeSetting _o3TreeSetting;
+        private ORiN3FieldDesign? _design;
+        private IList<ORiN3Provider> _providers = [];
+        private AsyncLock _lock = new();
+        private string _designFileDirector;
+        private O3Setting _o3Setting;
+        private O3TreeSetting _o3TreeSetting;
+        private IDictionary<string, MultiTypeValue> _variableBuffer;
 
         public ORiN3IO(string designFileDirectory)
             => _designFileDirector = designFileDirectory;
@@ -45,6 +45,8 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 ReadO3Json();
                 ReadO3TreeJson();
 
+                CreateVariableBuffer();
+
                 // Launching Provider
                 var remoteEngineId = _o3TreeSetting.Objects[0].Id; // Remote Engineは1つしか設定できないので要素0決め打ち
                 var remoteEngineSetting = _o3Setting.GetRemoteEngine(remoteEngineId);
@@ -60,6 +62,43 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 {
                     await provider.CreateObjectAsync(_o3Setting, _o3TreeSetting, token).ConfigureAwait(false);
                 }
+
+                Task.Factory.StartNew(() => UpdateBufferTask(CancellationToken.None));
+            }
+        }
+
+        private async Task UpdateBufferTask(CancellationToken token)
+        {
+            while (true)
+            {
+                await Task.Delay(_design!.PollingIntervalMSec).ConfigureAwait(false);
+                using (await _lock.LockAsync(token).ConfigureAwait(false))
+                {
+                    foreach (var provider in _providers)
+                    {
+                        try
+                        {
+                            var values = await provider.GetValuesAsync(token).ConfigureAwait(false);
+                            foreach (var value in values)
+                            {
+                                _variableBuffer[value.Key] = MultiTypeValue.Create(value.Value);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle exception
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CreateVariableBuffer()
+        {
+            _variableBuffer = new Dictionary<string, MultiTypeValue>();
+            foreach (var variable in _o3Setting.Variables)
+            {
+                _variableBuffer.Add(variable.Name, MultiTypeValue.Create(null));
             }
         }
 
@@ -83,21 +122,18 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         {
             using (await _lock.LockAsync())
             {
-                //TODO: kakei
-                var texts = new[] { "a", "b", "c", "d", "e" };
                 var dic = new Dictionary<string, MultiTypeValue>();
-
-                if (_providers.Count() == 0)
+                foreach (var device in devices)
                 {
-                    dic["R1"] = MultiTypeValue.Create(false);
-                    dic["D1"] = MultiTypeValue.Create(_random.Next(10000));
-                    dic["D2"] = MultiTypeValue.Create(texts[_random.Next(texts.Length)]);
-                    return dic;
+                    if (_variableBuffer.ContainsKey(device))
+                    {
+                        dic[device] = _variableBuffer[device];
+                    }
+                    else
+                    {
+                        dic[device] = MultiTypeValue.Create(null);
+                    }
                 }
-
-                dic["R1"] = await _providers[0].GetValueAsync("R1", CancellationToken.None);
-                dic["D1"] = await _providers[0].GetValueAsync("D1", CancellationToken.None);
-                dic["D2"] = MultiTypeValue.Create(texts[_random.Next(texts.Length)]);
                 await Task.CompletedTask;
                 return dic;
             }

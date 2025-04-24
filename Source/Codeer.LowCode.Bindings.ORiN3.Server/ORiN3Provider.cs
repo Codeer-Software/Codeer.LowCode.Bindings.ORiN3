@@ -28,6 +28,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         private readonly bool _instanceCreated;
         private bool _disposedValue;
         private readonly ORiN3Root _objectTree;
+        private Tuple<int, Guid[], string[]> _registeredIdAndNames;
 
         public ORiN3Provider(Guid remoteEngineId, IRootObject rootObject, O3Setting.ORiN3RootObjectSetting rootSetting, bool instanceCreated)
         {
@@ -42,6 +43,25 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         {
             Debug.Assert(false);
             Dispose(disposing: false);
+        }
+
+        internal async Task<IDictionary<string, object?>> GetValuesAsync(CancellationToken token)
+        {
+            var values = await _rootObject!.GetValuesAsync(_registeredIdAndNames.Item1, token).ConfigureAwait(false);
+            Debug.Assert(_registeredIdAndNames.Item3.Length == values.Length);
+            var result = new Dictionary<string, object?>();
+            for (var i = 0; i < values.Length; ++i)
+            {
+                if (values[i].Succeeded)
+                {
+                    result.Add(_registeredIdAndNames.Item3[i], values[i].Value);
+                }
+                else
+                {
+                    result.Add(_registeredIdAndNames.Item3[i], null);
+                }
+            }
+            return result;
         }
 
         internal async Task<MultiTypeValue> GetValueAsync(string name, CancellationToken token)
@@ -90,11 +110,17 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             throw new Exception();
         }
 
-        internal Task CreateObjectAsync(O3Setting o3Setting, O3TreeSetting o3TreeSetting, CancellationToken token)
+        internal async Task CreateObjectAsync(O3Setting o3Setting, O3TreeSetting o3TreeSetting, CancellationToken token)
         {
             var remoteEngine = o3TreeSetting.Objects.Where(_ => _.Id == _remoteEngineId).Single();
             var root = remoteEngine.Children.Where(_ => _.Id == _rootSetting!.Id).Single();
-            return CreateObjectAsync(o3Setting, o3TreeSetting, _objectTree!, root, token);
+            await CreateObjectAsync(o3Setting, o3TreeSetting, _objectTree!, root, token).ConfigureAwait(false);
+            var variables = EnumObject().Where(_ => _.Self.ORiN3ObjectType == ORiN3ObjectType.Variable).ToArray();
+            var variableIds = variables.Select(_ => _.Self.Id).ToArray();
+            var variableNames = variables.Select(_ => _.Self.Name).ToArray();
+            var registeredId = await _rootObject!.RegisterValuesAsync(variableIds, token).ConfigureAwait(false);
+            _registeredIdAndNames = new Tuple<int, Guid[], string[]>(registeredId, variableIds, variableNames);
+            return;
         }
 
         private async Task CreateObjectAsync(O3Setting o3Setting, O3TreeSetting o3TreeSetting, ORiN3Object parent, O3TreeSetting.TreeObject tree, CancellationToken token)
