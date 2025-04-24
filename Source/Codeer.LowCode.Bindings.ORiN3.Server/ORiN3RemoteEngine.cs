@@ -1,5 +1,4 @@
-﻿using Design.ORiN3.Provider.Core.V1.Telemetry;
-using Design.ORiN3.RemoteEngineEx.V1;
+﻿using Design.ORiN3.RemoteEngineEx.V1;
 using Grpc.Net.Client;
 using Message.Client.ORiN3.Provider.V1;
 using Message.Client.ORiN3.RemoteEngine.V1;
@@ -10,7 +9,6 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
     internal class ORiN3RemoteEngine : IDisposable
     {
         private readonly O3Setting.ORiN3RemoteEngineSetting _remoteEngineSetting;
-        private readonly int _port;
         private IRemoteEngineEx? _remoteEngine;
         private bool _disposedValue;
 
@@ -28,6 +26,11 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
         internal async static Task<ORiN3RemoteEngine> AttachAsync(O3Setting.ORiN3RemoteEngineSetting remoteEngineSetting, CancellationToken token)
         {
+            if (remoteEngineSetting.Protocol != 0)
+            {
+                throw new NotSupportedException($"The specified protocol value '{remoteEngineSetting.Protocol}' is not supported. Currently, only HTTP (protocol value 0) is supported.");
+            }
+
             var channel = GrpcChannel.ForAddress($"http://{remoteEngineSetting.Host}:{remoteEngineSetting.Port}/");
             var remoteEngine = await RemoteEngine.AttachAsync(channel, uint.MaxValue, token).ConfigureAwait(false);
             return new ORiN3RemoteEngine(remoteEngineSetting, remoteEngine);
@@ -71,23 +74,18 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
         internal async Task<ORiN3Provider> WakeupProviderAsync(O3Setting.ORiN3RootObjectSetting rootSetting, CancellationToken token)
         {
-            // Launching Provider
-            var providerEndpoints = new ProviderEndpoint[] { new(0, rootSetting.Host, rootSetting.PortAutoAllocationEnabled ? 0 : rootSetting.Port, []) };
-            var telemetryEndpoints = Array.Empty<TelemetryEndpoint>();
-            var telemetryAttributes = new Dictionary<string, string> { };
-            var telemetryOption = new TelemetryOption(true, telemetryEndpoints, telemetryAttributes);
-            var extensions = new Dictionary<string, string> { };
+            if (rootSetting.Protocol != 0)
+            {
+                throw new NotSupportedException($"The specified protocol value '{rootSetting.Protocol}' is not supported. Currently, only HTTP (protocol value 0) is supported.");
+            }
+
+            var providerEndpoints = new ProviderEndpoint[] { new(rootSetting.Protocol, rootSetting.Host, rootSetting.PortAutoAllocationEnabled ? 0 : rootSetting.Port, []) };
+            var telemetryEndpoints = rootSetting.TelemetryEndpoints.Select(_ => new TelemetryEndpoint(_.Uri, _.TelemetryTypeFlag, _.ProxySetting, _.ProxyAddress, _.ProtocolType, [])).ToArray();
+            var telemetryOption = new TelemetryOption(rootSetting.UseRemoteEngineTelemetrySetting, telemetryEndpoints, Attributes: new Dictionary<string, string>());
             try
             {
-                var wakeupProviderResult = await _remoteEngine!.WakeupProviderAsync(
-                    id: rootSetting.ProviderId,
-                    version: rootSetting.Version,
-                    threadSafeMode: true,
-                    endpoints: providerEndpoints,
-                    logLevel: ORiN3LogLevel.Information,
-                    telemetryOption: telemetryOption,
-                    extension: extensions,
-                    token: token).ConfigureAwait(false);
+                var wakeupProviderResult = await _remoteEngine!.WakeupProviderAsync(rootSetting.ProviderId, version: rootSetting.Version,
+                    rootSetting.ThreadSafeMode, providerEndpoints, rootSetting.LogLevel, telemetryOption, rootSetting.Extension, token).ConfigureAwait(false);
 
                 var providerPort = rootSetting.Port;
                 if (rootSetting.PortAutoAllocationEnabled)

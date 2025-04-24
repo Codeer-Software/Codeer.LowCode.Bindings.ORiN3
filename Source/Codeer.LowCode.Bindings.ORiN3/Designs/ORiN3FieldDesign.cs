@@ -11,8 +11,10 @@ namespace Codeer.LowCode.Bindings.ORiN3.Designs
     {
         public int PollingTime { get; set; } = 1000;
 
-        [Designer(DisplayName = "Polling Interval(ms)", CandidateType = CandidateType.Variable)]
+        [Designer(DisplayName = "Polling Interval (ms)", CandidateType = CandidateType.Variable)]
         public int PollingIntervalMSec { get; set; } = 1000;
+        [Designer(DisplayName = "Inactivity Timeout (s)", CandidateType = CandidateType.Variable)]
+        public int InactivityTimeout { get; set; } = 60;
 
         [Designer(Category = "ORiN3 Configurator Setting", DisplayName = "O3 Json", CandidateType = CandidateType.Resource)]
         public string O3JsonFilePath { get; set; } = string.Empty;

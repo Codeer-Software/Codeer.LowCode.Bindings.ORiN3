@@ -65,9 +65,11 @@
     },
     {
       "PollingTime": 1000,
+      "PollingIntervalMSec": 1000,
+      "InactivityTimeout": 30,
       "O3JsonFilePath": "o3.json",
       "O3TreeJsonFilePath": "o3tree.json",
-      "Name": "KVProvider",
+      "Name": "localhost",
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Bindings.ORiN3.Designs.ORiN3FieldDesign"
@@ -116,7 +118,7 @@
             "Columns": [
               {
                 "Layout": {
-                  "FieldName": "KVProvider",
+                  "FieldName": "localhost",
                   "FontFamily": "",
                   "Color": "",
                   "BackgroundColor": "",

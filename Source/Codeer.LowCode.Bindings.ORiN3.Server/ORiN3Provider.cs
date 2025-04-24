@@ -47,6 +47,8 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
         internal async Task<IDictionary<string, object?>> GetValuesAsync(CancellationToken token)
         {
+            Debug.Assert(!_disposedValue);
+
             var values = await _rootObject!.GetValuesAsync(_registeredIdAndNames.Item1, token).ConfigureAwait(false);
             Debug.Assert(_registeredIdAndNames.Item3.Length == values.Length);
             var result = new Dictionary<string, object?>();
@@ -66,6 +68,8 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
         internal async Task<MultiTypeValue> GetValueAsync(string name, CancellationToken token)
         {
+            Debug.Assert(!_disposedValue);
+
             var orin3Object = GetObjectByName(name);
             var variable = (IVariable)orin3Object.Self;
             var branch = new CreateMultiTypeValueBranch(variable);
@@ -112,6 +116,8 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
         internal async Task CreateObjectAsync(O3Setting o3Setting, O3TreeSetting o3TreeSetting, CancellationToken token)
         {
+            Debug.Assert(!_disposedValue);
+
             var remoteEngine = o3TreeSetting.Objects.Where(_ => _.Id == _remoteEngineId).Single();
             var root = remoteEngine.Children.Where(_ => _.Id == _rootSetting!.Id).Single();
             await CreateObjectAsync(o3Setting, o3TreeSetting, _objectTree!, root, token).ConfigureAwait(false);
