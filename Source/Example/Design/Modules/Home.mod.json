@@ -7,11 +7,13 @@
   "CanDelete": true,
   "Fields": [
     {
+      "SettingModule": "Settings",
+      "ORiN3Field": "localhost",
       "PollingTime": 1000,
       "Items": [
-        "R1,R1",
-        "D1,D1",
-        "D2,D2"
+        "R1,R1Field",
+        "D1,D1Field",
+        "D2,D2Field"
       ],
       "Name": "ORiN3Monitor",
       "ClassName": "",
@@ -28,7 +30,7 @@
       "DisplayName": "",
       "IsRequired": false,
       "OnDataChanged": "",
-      "Name": "R1",
+      "Name": "R1Field",
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.BooleanFieldDesign"
@@ -43,7 +45,7 @@
       "DisplayName": "",
       "IsRequired": false,
       "OnDataChanged": "",
-      "Name": "D1",
+      "Name": "D1Field",
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.NumberFieldDesign"
@@ -58,21 +60,10 @@
       "DisplayName": "",
       "IsRequired": false,
       "OnDataChanged": "",
-      "Name": "D2",
+      "Name": "D2Field",
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.TextFieldDesign"
-    },
-    {
-      "PollingTime": 1000,
-      "PollingIntervalMSec": 1000,
-      "InactivityTimeout": 30,
-      "O3JsonFilePath": "o3.json",
-      "O3TreeJsonFilePath": "o3tree.json",
-      "Name": "localhost",
-      "ClassName": "",
-      "ContextMenu": "",
-      "TypeFullName": "Codeer.LowCode.Bindings.ORiN3.Designs.ORiN3FieldDesign"
     }
   ],
   "UserWriteCondition": {
@@ -109,7 +100,6 @@
         "Rows": [
           {
             "IsWrap": false,
-            "Height": 0,
             "Margin": {},
             "GridRowType": "Normal",
             "CanResize": false,
@@ -118,7 +108,7 @@
             "Columns": [
               {
                 "Layout": {
-                  "FieldName": "localhost",
+                  "FieldName": "ORiN3Monitor",
                   "FontFamily": "",
                   "Color": "",
                   "BackgroundColor": "",
@@ -137,14 +127,6 @@
                 "Border": "None"
               },
               {
-                "Layout": {
-                  "FieldName": "ORiN3Monitor",
-                  "FontFamily": "",
-                  "Color": "",
-                  "BackgroundColor": "",
-                  "Name": "",
-                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
-                },
                 "Padding": {},
                 "BackgroundColor": "",
                 "BorderStyle": {
@@ -192,7 +174,7 @@
             "Columns": [
               {
                 "Layout": {
-                  "FieldName": "R1",
+                  "FieldName": "R1Field",
                   "FontFamily": "",
                   "Color": "",
                   "BackgroundColor": "",
@@ -212,7 +194,7 @@
               },
               {
                 "Layout": {
-                  "FieldName": "D1",
+                  "FieldName": "D1Field",
                   "FontFamily": "",
                   "Color": "",
                   "BackgroundColor": "",
@@ -232,7 +214,7 @@
               },
               {
                 "Layout": {
-                  "FieldName": "D2",
+                  "FieldName": "D2Field",
                   "FontFamily": "",
                   "Color": "",
                   "BackgroundColor": "",

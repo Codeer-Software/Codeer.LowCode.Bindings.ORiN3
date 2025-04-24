@@ -224,15 +224,22 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 _counter = 0;
 
                 var dic = new Dictionary<string, ORiN3IOResult>();
-                foreach (var device in devices)
+                foreach (var fullPath in devices)
                 {
+                    var sp = fullPath.Split('.');
+
+                    //TODO : kakei
+                    var settingModule = sp[0];
+                    var orin3Field = sp[1];
+                    var device = string.Join(".", fullPath.Split('.').Skip(2));
+
                     if (_variableBuffer.TryGetValue(device, out MultiTypeValue? value))
                     {
-                        dic[device] = new ORiN3IOResult { Value = value };
+                        dic[fullPath] = new ORiN3IOResult { Value = value };
                     }
                     else
                     {
-                        dic[device] = new();
+                        dic[fullPath] = new();
                     }
                 }
                 await Task.CompletedTask;

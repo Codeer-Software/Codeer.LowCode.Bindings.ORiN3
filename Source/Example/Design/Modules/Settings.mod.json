@@ -5,7 +5,19 @@
   "CanCreate": true,
   "CanUpdate": true,
   "CanDelete": true,
-  "Fields": [],
+  "Fields": [
+    {
+      "PollingTime": 1000,
+      "PollingIntervalMSec": 1000,
+      "InactivityTimeout": 30,
+      "O3JsonFilePath": "o3.json",
+      "O3TreeJsonFilePath": "o3tree.json",
+      "Name": "localhost",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Bindings.ORiN3.Designs.ORiN3FieldDesign"
+    }
+  ],
   "UserWriteCondition": {
     "ModuleName": ""
   },
@@ -47,6 +59,14 @@
             "IsRowMarginRemoved": false,
             "Columns": [
               {
+                "Layout": {
+                  "FieldName": "localhost",
+                  "FontFamily": "",
+                  "Color": "",
+                  "BackgroundColor": "",
+                  "Name": "",
+                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                },
                 "Padding": {},
                 "BackgroundColor": "",
                 "BorderStyle": {

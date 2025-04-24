@@ -16,17 +16,26 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
 
         Dictionary<string, FieldBase> _deviceAndFields = new();
 
+        internal bool IsPollingTarget => _deviceAndFields.Any();
+
         public override async Task InitializeDataAsync(FieldDataBase? fieldDataBase)
         {
-            foreach (var i in Design.Items)
-            { 
-                var sp = i.Split(',').Select(e=>e.Trim()).ToArray();
-                if (sp.Length != 2) continue;
-                var field = Module.GetField(sp[1]);
-                if (field == null) continue;
-                _deviceAndFields[sp[0]] = field;
-            }
+            var samePollingTimes = Module.GetFields().OfType<ORiN3MonitorField>().Where(e => e.Design.PollingTime == Design.PollingTime);
 
+            // Polling only the first one at the same polling time.
+            if (samePollingTimes.First().Design.Name != Design.Name) return;
+
+            foreach (var e in samePollingTimes)
+            {
+                foreach (var i in e.Design.Items)
+                {
+                    var sp = i.Split(',').Select(e => e.Trim()).ToArray();
+                    if (sp.Length != 2) continue;
+                    var field = Module.GetField(sp[1]);
+                    if (field == null) continue;
+                    _deviceAndFields[$"{e.Design.SettingModule}.{e.Design.ORiN3Field}.{sp[0]}"] = field;
+                }
+            }
             await Task.CompletedTask;
         }
 
@@ -38,7 +47,8 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
 
             using var scope = Module.SuspendNotifyStateChanged();
 
-            foreach(var e in result)
+            //TODO ; Show error message
+            foreach (var e in result)
             {
                 if (_deviceAndFields.TryGetValue(e.Key, out var field))
                 {
