@@ -65,6 +65,8 @@
     },
     {
       "PollingTime": 1000,
+      "O3JsonFilePath": "o3.json",
+      "O3TreeJsonFilePath": "o3tree.json",
       "RemoteEngineHost": "127.0.0.1",
       "RemoteEnginePort": 7103,
       "Provider": "",

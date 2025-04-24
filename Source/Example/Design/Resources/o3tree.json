@@ -1,0 +1,42 @@
+{
+  "DataInformation": {
+    "CreatedDateTime": "2025-04-21T08:39:16.4020244Z",
+    "Hash": "771a941a694e0b6fae959890d871b157b21da9ff8f187e29bfc540d446fd6b5c",
+    "Version": 1,
+    "FileType": "ORiN3ObjectsTreeElem",
+    "ToolInformation": {
+      "Name": "ORiN3 Configurator",
+      "Version": "1.0.445"
+    }
+  },
+  "Objects": [
+    {
+      "Id": "ea9cd528-7119-451e-8aa7-474ee3571ba5",
+      "ObjectType": 0,
+      "Children": [
+        {
+          "Id": "bb5b6f07-1609-4add-b46f-59b865c8f27f",
+          "ObjectType": 1,
+          "Children": [
+            {
+              "Id": "e925c486-5732-4a19-ad0c-04b3224d1fcf",
+              "ObjectType": 2,
+              "Children": [
+                {
+                  "Id": "ae2aca15-4a5e-4164-a7c0-106a57b72054",
+                  "ObjectType": 4,
+                  "Children": []
+                },
+                {
+                  "Id": "2cf1e516-6dea-47c3-be1e-3c2f30d18a3c",
+                  "ObjectType": 4,
+                  "Children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "DataInformation": {
+    "CreatedDateTime": "2025-04-21T08:39:16.4020244Z",
+    "Hash": "d8211f68cfa757b49600e3d6ed79a68c6dee5149dca09d8d0bb071f97e8af084",
+    "Version": 1,
+    "FileType": "ORiN3ObjectsDataElem",
+    "ToolInformation": {
+      "Name": "ORiN3 Configurator",
+      "Version": "1.0.445"
+    }
+  },
+  "DiffKey": {
+    "Id": "bb196cd5-8713-4309-9f7b-b96ee1bd9dfa",
+    "ModificationDateTime": "2025-04-24T00:50:33.9875364Z"
+  },
+  "Id": "647c2c73-f48a-4740-acdb-46c78cf16624",
+  "RemoteEngines": [
+    {
+      "Id": "ea9cd528-7119-451e-8aa7-474ee3571ba5",
+      "Name": "RuntimeHost",
+      "Comment": "",
+      "Host": "127.0.0.1",
+      "Port": 7103,
+      "Protocol": 0,
+      "CertificateFile": "",
+      "CertificatePassword": ""
+    }
+  ],
+  "RootObjects": [
+    {
+      "Id": "bb5b6f07-1609-4add-b46f-59b865c8f27f",
+      "Name": "ORiNConsortiumMockProvider",
+      "IsEnabled": true,
+      "Comment": "",
+      "ORiN3ObjectName": "ORiNConsortiumMockProvider",
+      "ProviderId": "643D12C8-DCFC-476C-AA15-E8CA004F48E8",
+      "Version": "1.0.85",
+      "Host": "127.0.0.1",
+      "PortAutoAllocationEnabled": false,
+      "Port": 50000,
+      "IsThreadSafeMode": true,
+      "UseRemoteEngineTelemetrySetting": true,
+      "LogLevel": "Information",
+      "Protocol": 0,
+      "SpecifyCertificate": false,
+      "CertificateFile": "",
+      "CertificatePassword": "",
+      "TelemetryEndpoints": [],
+      "Extension": []
+    }
+  ],
+  "Controllers": [
+    {
+      "Id": "e925c486-5732-4a19-ad0c-04b3224d1fcf",
+      "Name": "GeneralPurposeController",
+      "IsEnabled": true,
+      "Comment": "",
+      "ORiN3ObjectName": "GeneralPurposeController",
+      "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Controller.GeneralPurposeController, ORiN3.Provider.ORiNConsortium.Mock",
+      "Option": "{\u0022@Version\u0022:\u00221.0.85\u0022}",
+      "Tag": ""
+    }
+  ],
+  "Modules": [],
+  "Variables": [
+    {
+      "Id": "ae2aca15-4a5e-4164-a7c0-106a57b72054",
+      "Name": "R1",
+      "IsEnabled": true,
+      "Comment": "",
+      "ORiN3ObjectName": "R1",
+      "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Variable.PulseWaveBoolVariable, ORiN3.Provider.ORiNConsortium.Mock",
+      "Option": "{\u0022@Version\u0022:\u00221.0.85\u0022}",
+      "ValueType": 0,
+      "Tag": ""
+    },
+    {
+      "Id": "2cf1e516-6dea-47c3-be1e-3c2f30d18a3c",
+      "Name": "D1",
+      "IsEnabled": true,
+      "Comment": "",
+      "ORiN3ObjectName": "D1",
+      "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Variable.PulseWaveInt32Variable, ORiN3.Provider.ORiNConsortium.Mock",
+      "Option": "{\u0022@Version\u0022:\u00221.0.85\u0022}",
+      "ValueType": 5,
+      "Tag": ""
+    }
+  ],
+  "Events": [],
+  "Files": [],
+  "Jobs": [],
+  "Streams": []
+}
