@@ -8,22 +8,17 @@ using System.Text.Json.Nodes;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Server
 {
-    public class ORiN3IO
+    public class ORiN3IO(string designFileDirectory)
     {
+        private readonly string _designFileDirector = designFileDirectory;
         private readonly AsyncLock _asyncLock = new();
-        private readonly string _designFileDirector;
         private ORiN3FieldDesign? _design;
         private IList<ORiN3Provider> _providers = [];
-        private O3Setting _o3Setting;
-        private O3TreeSetting _o3TreeSetting;
-        private IDictionary<string, MultiTypeValue> _variableBuffer = new Dictionary<string, MultiTypeValue>();
+        private Dictionary<string, MultiTypeValue> _variableBuffer = [];
         private bool _initialized = false;
-        private Task _updateBufferTask;
-        private CancellationTokenSource _updateBufferTaskCancellationTokenSource;
+        private Task? _updateBufferTask;
+        private CancellationTokenSource? _updateBufferTaskCancellationTokenSource;
         private int _counter;
-
-        public ORiN3IO(string designFileDirectory)
-            => _designFileDirector = designFileDirectory;
 
         public async Task SetDesignAsync(ORiN3FieldDesign? design)
         {
@@ -53,7 +48,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             {
                 if (_updateBufferTask !=null)
                 {
-                    _updateBufferTaskCancellationTokenSource.Cancel();
+                    _updateBufferTaskCancellationTokenSource!.Cancel();
                     await _updateBufferTask.ConfigureAwait(false);
                     _updateBufferTaskCancellationTokenSource.Dispose();
                     _updateBufferTaskCancellationTokenSource = null!;
@@ -73,8 +68,6 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 }
 
                 _initialized = false;
-                _o3Setting = null!;
-                _o3TreeSetting = null!;
                 _providers = null!;
                 _variableBuffer.Clear();
 
@@ -99,8 +92,6 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 _updateBufferTaskCancellationTokenSource = new();
                 _updateBufferTask = Task.Factory.StartNew(() => UpdateBufferTask(_updateBufferTaskCancellationTokenSource.Token));
 
-                _o3Setting = o3Setting;
-                _o3TreeSetting = o3TreeSetting;
                 _providers = providers;
                 _initialized = true;
             }
@@ -119,8 +110,6 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 }
 
                 _initialized = false;
-                _o3Setting = null!;
-                _o3TreeSetting = null!;
                 _providers = null!;
                 _variableBuffer.Clear();
 
@@ -144,10 +133,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                     using (await _asyncLock.LockAsync(token).ConfigureAwait(false))
                     {
                         ++_counter;
-                        Debug.WriteLine(_counter);
                         if (_design.InactivityTimeout * 1000 < _counter * _design.PollingIntervalMSec)
                         {
-                            _updateBufferTaskCancellationTokenSource.Dispose();
+                            _updateBufferTaskCancellationTokenSource!.Dispose();
                             _updateBufferTaskCancellationTokenSource = null!;
                             _updateBufferTask = null!;
 
@@ -164,8 +152,6 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                             }
 
                             _initialized = false;
-                            _o3Setting = null!;
-                            _o3TreeSetting = null!;
                             _providers = null!;
                             _variableBuffer.Clear();
                             return;
@@ -203,7 +189,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             }
         }
 
-        private static IDictionary<string, MultiTypeValue> CreateVariableBuffer(O3Setting o3Setting)
+        private static Dictionary<string, MultiTypeValue> CreateVariableBuffer(O3Setting o3Setting)
         {
             var variableBuffer = new Dictionary<string, MultiTypeValue>();
             foreach (var variable in o3Setting.Variables)
@@ -239,9 +225,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 var dic = new Dictionary<string, MultiTypeValue>();
                 foreach (var device in devices)
                 {
-                    if (_variableBuffer.ContainsKey(device))
+                    if (_variableBuffer.TryGetValue(device, out MultiTypeValue? value))
                     {
-                        dic[device] = _variableBuffer[device];
+                        dic[device] = value;
                     }
                     else
                     {

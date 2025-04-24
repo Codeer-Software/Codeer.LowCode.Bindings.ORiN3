@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Server
 {
-    internal class ORiN3Provider : IDisposable
+    internal class ORiN3Provider(Guid remoteEngineId, IRootObject rootObject, O3Setting.ORiN3RootObjectSetting rootSetting, bool instanceCreated) : IDisposable
     {
         private class ORiN3Root(IRootObject rootObject) : ORiN3Object(rootObject)
         {
@@ -22,22 +22,13 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             public IList<ORiN3Object> Children { get; } = [];
         }
 
-        private readonly Guid _remoteEngineId;
-        private IRootObject? _rootObject;
-        private readonly O3Setting.ORiN3RootObjectSetting _rootSetting;
-        private readonly bool _instanceCreated;
+        private readonly Guid _remoteEngineId = remoteEngineId;
+        private IRootObject? _rootObject = rootObject;
+        private readonly O3Setting.ORiN3RootObjectSetting _rootSetting = rootSetting;
+        private readonly bool _instanceCreated = instanceCreated;
         private bool _disposedValue;
-        private readonly ORiN3Root _objectTree;
-        private Tuple<int, Guid[], string[]> _registeredIdAndNames;
-
-        public ORiN3Provider(Guid remoteEngineId, IRootObject rootObject, O3Setting.ORiN3RootObjectSetting rootSetting, bool instanceCreated)
-        {
-            _remoteEngineId = remoteEngineId;
-            _rootObject = rootObject;
-            _rootSetting = rootSetting;
-            _objectTree = new ORiN3Root(rootObject);
-            _instanceCreated = instanceCreated;
-        }
+        private readonly ORiN3Root _objectTree = new(rootObject);
+        private Tuple<int, Guid[], string[]>? _registeredIdAndNames;
 
         ~ORiN3Provider()
         {
@@ -49,7 +40,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         {
             Debug.Assert(!_disposedValue);
 
-            var values = await _rootObject!.GetValuesAsync(_registeredIdAndNames.Item1, token).ConfigureAwait(false);
+            var values = await _rootObject!.GetValuesAsync(_registeredIdAndNames!.Item1, token).ConfigureAwait(false);
             Debug.Assert(_registeredIdAndNames.Item3.Length == values.Length);
             var result = new Dictionary<string, object?>();
             for (var i = 0; i < values.Length; ++i)
@@ -89,7 +80,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             }
         }
 
-        private IEnumerable<ORiN3Object> EnumObject(ORiN3Object orin3Object)
+        private static IEnumerable<ORiN3Object> EnumObject(ORiN3Object orin3Object)
         {
             foreach (var it in orin3Object.Children)
             {
@@ -129,7 +120,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             return;
         }
 
-        private async Task CreateObjectAsync(O3Setting o3Setting, O3TreeSetting o3TreeSetting, ORiN3Object parent, O3TreeSetting.TreeObject tree, CancellationToken token)
+        private static async Task CreateObjectAsync(O3Setting o3Setting, O3TreeSetting o3TreeSetting, ORiN3Object parent, O3TreeSetting.TreeObject tree, CancellationToken token)
         {
             foreach (var child in tree.Children)
             {
@@ -175,7 +166,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             }
         }
 
-        private async Task<IController> CreateOrAttachControllerAsync(ORiN3Object parent, O3Setting.ORiN3ObjectSetting targetSetting, CancellationToken token)
+        private static async Task<IController> CreateOrAttachControllerAsync(ORiN3Object parent, O3Setting.ORiN3ObjectSetting targetSetting, CancellationToken token)
         {
             var informations = await ((IParent)parent.Self).GetChildInformationsAsync(token).ConfigureAwait(false);
             foreach (var info in informations)
@@ -195,7 +186,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             return controller;
         }
 
-        private async Task<IModule> CreateOrAttachModuleAsync(ORiN3Object parent, O3Setting.ORiN3ObjectSetting targetSetting, CancellationToken token)
+        private static async Task<IModule> CreateOrAttachModuleAsync(ORiN3Object parent, O3Setting.ORiN3ObjectSetting targetSetting, CancellationToken token)
         {
             var informations = await ((IParent)parent.Self).GetChildInformationsAsync(token).ConfigureAwait(false);
             foreach (var info in informations)
@@ -214,7 +205,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             return module;
         }
 
-        private async Task<IVariable> CreateOrAttachVariableAsync(ORiN3Object parent, O3Setting.ORiN3VariableSetting targetSetting, CancellationToken token)
+        private static async Task<IVariable> CreateOrAttachVariableAsync(ORiN3Object parent, O3Setting.ORiN3VariableSetting targetSetting, CancellationToken token)
         {
             var informations = await ((IParent)parent.Self).GetChildInformationsAsync(token).ConfigureAwait(false);
             foreach (var info in informations)

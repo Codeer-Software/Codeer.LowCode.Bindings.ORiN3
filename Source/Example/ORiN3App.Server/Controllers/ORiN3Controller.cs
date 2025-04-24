@@ -11,8 +11,8 @@ namespace ORiN3App.Server.Controllers
     [Route("api/orin3")]
     public class ORiN3Controller : ControllerBase
     {
-        static ORiN3IO oRiN3IO = new ORiN3IO(SystemConfig.Instance.DesignFileDirectory);
-        static private bool a;
+        private static readonly ORiN3IO orin3IO = new(SystemConfig.Instance.DesignFileDirectory);
+
         [HttpPost("values")]
         public async Task<Dictionary<string, MultiTypeValue>> GetValuesAsync(List<string> devices)
         {
@@ -23,16 +23,8 @@ namespace ORiN3App.Server.Controllers
                 if (orin3 != null) break;
             }
 
-            if (!a)
-            {
-                await oRiN3IO.SetDesignAsync(orin3);
-                a = true;
-                return await oRiN3IO.GetValuesAsync(devices);
-            }
-            else
-            {
-                throw new Exception();
-            }
+            await orin3IO.SetDesignAsync(orin3);
+            return await orin3IO.GetValuesAsync(devices);
         }
     }
 }
