@@ -1,4 +1,5 @@
 ﻿using Codeer.LowCode.Bindings.ORiN3.Designs;
+using Codeer.LowCode.Bindings.ORiN3.Fields;
 using Codeer.LowCode.Blazor.DesignLogic;
 using Codeer.LowCode.Blazor.Repository;
 using Colda.CommonUtilities.Tasks;
@@ -215,23 +216,23 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             return new O3TreeSetting(jsonNode!);
         }
 
-        public async Task<Dictionary<string, MultiTypeValue>> GetValuesAsync(List<string> devices)
+        public async Task<Dictionary<string, ORiN3IOResult>> GetValuesAsync(List<string> devices)
         {
             using (await _asyncLock.LockAsync())
             {
                 Debug.Assert(_initialized);
                 _counter = 0;
 
-                var dic = new Dictionary<string, MultiTypeValue>();
+                var dic = new Dictionary<string, ORiN3IOResult>();
                 foreach (var device in devices)
                 {
                     if (_variableBuffer.TryGetValue(device, out MultiTypeValue? value))
                     {
-                        dic[device] = value;
+                        dic[device] = new ORiN3IOResult { Value = value };
                     }
                     else
                     {
-                        dic[device] = MultiTypeValue.Create(null);
+                        dic[device] = new();
                     }
                 }
                 await Task.CompletedTask;

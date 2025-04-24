@@ -118,7 +118,7 @@ namespace ORiN3App.Client.Shared.Services
             }
         }
 
-        public async Task<Dictionary<string, MultiTypeValue>> GetValues(List<string> devices)
-            => await _http.PostAsJsonAsync<List<string>, Dictionary<string, MultiTypeValue>>($"/api/orin3/values", devices, false) ?? new();
+        public async Task<Dictionary<string, ORiN3IOResult>> GetValues(List<string> devices)
+            => await _http.PostAsJsonAsync<List<string>, Dictionary<string, ORiN3IOResult>>($"/api/orin3/values", devices, false) ?? new();
     }
 }

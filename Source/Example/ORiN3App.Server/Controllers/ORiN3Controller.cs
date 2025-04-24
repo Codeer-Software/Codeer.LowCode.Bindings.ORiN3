@@ -1,4 +1,5 @@
 using Codeer.LowCode.Bindings.ORiN3.Designs;
+using Codeer.LowCode.Bindings.ORiN3.Fields;
 using Codeer.LowCode.Bindings.ORiN3.Server;
 using Codeer.LowCode.Blazor.DesignLogic;
 using Codeer.LowCode.Blazor.Repository;
@@ -14,7 +15,7 @@ namespace ORiN3App.Server.Controllers
         private static readonly ORiN3IO orin3IO = new(SystemConfig.Instance.DesignFileDirectory);
 
         [HttpPost("values")]
-        public async Task<Dictionary<string, MultiTypeValue>> GetValuesAsync(List<string> devices)
+        public async Task<Dictionary<string, ORiN3IOResult>> GetValuesAsync(List<string> devices)
         {
             ORiN3FieldDesign? orin3 = null;
             foreach (var e in DesignerService.GetDesignData().Modules.ToList())

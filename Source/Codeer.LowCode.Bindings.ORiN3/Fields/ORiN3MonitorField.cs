@@ -3,7 +3,6 @@ using Codeer.LowCode.Blazor.DataIO;
 using Codeer.LowCode.Blazor.OperatingModel;
 using Codeer.LowCode.Blazor.Repository;
 using Codeer.LowCode.Blazor.Repository.Data;
-using Microsoft.Net.Http.Headers;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Fields
 {
@@ -45,7 +44,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
                 {
                     try
                     {
-                        await SetValue(field, e.Value);
+                        await SetValue(field, e.Value.Value);
                     }
                     catch { }
                 }
