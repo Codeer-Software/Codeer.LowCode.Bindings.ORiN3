@@ -7,6 +7,7 @@
   "CanDelete": true,
   "Fields": [
     {
+      "IsPollingEnabled": true,
       "PollingTime": 1000,
       "SettingModule": "Settings",
       "ORiN3Field": "localhost",
@@ -85,6 +86,24 @@
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Bindings.ORiN3.Designs.ValueImageFieldDesign"
+    },
+    {
+      "Text": "Update",
+      "ImageResourcePath": "",
+      "ImageResourceSet": {
+        "Default": "",
+        "Focus": "",
+        "Active": "",
+        "Hover": "",
+        "Disabled": ""
+      },
+      "Icon": "",
+      "Variant": "Primary",
+      "OnClick": "Button_OnClick",
+      "Name": "Button",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ButtonFieldDesign"
     }
   ],
   "UserWriteCondition": {
@@ -254,6 +273,14 @@
                 "Border": "None"
               },
               {
+                "Layout": {
+                  "FieldName": "Button",
+                  "FontFamily": "",
+                  "Color": "",
+                  "BackgroundColor": "",
+                  "Name": "",
+                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                },
                 "Padding": {},
                 "BackgroundColor": "",
                 "BorderStyle": {

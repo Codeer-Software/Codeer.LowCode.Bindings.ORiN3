@@ -11,3 +11,7 @@ void R1Field_OnDataChanged()
     if (R1Field.Value)R1Image.SetMemoryStream("on.png", _onImage);
     else R1Image.SetMemoryStream("off.png", _offImage);
 }
+void Button_OnClick()
+{
+    ORiN3Monitor.Update();
+}

@@ -10,6 +10,8 @@ namespace Codeer.LowCode.Bindings.ORiN3.Designs
     public class ORiN3MonitorFieldDesign() : FieldDesignBase(typeof(ORiN3MonitorFieldDesign).FullName!)
     {
         [Designer]
+        public bool IsPollingEnabled { get; set; } = true;
+        [Designer]
         public int PollingTime { get; set; } = 1000;
 
         [Designer(CandidateType = CandidateType.Module)]

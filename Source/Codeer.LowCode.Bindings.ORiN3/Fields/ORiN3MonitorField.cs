@@ -3,6 +3,7 @@ using Codeer.LowCode.Blazor.DataIO;
 using Codeer.LowCode.Blazor.OperatingModel;
 using Codeer.LowCode.Blazor.Repository;
 using Codeer.LowCode.Blazor.Repository.Data;
+using Codeer.LowCode.Blazor.Script;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Fields
 {
@@ -20,33 +21,43 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
 
         public override async Task InitializeDataAsync(FieldDataBase? fieldDataBase)
         {
-            var samePollingTimes = Module.GetFields().OfType<ORiN3MonitorField>().Where(e => e.Design.PollingTime == Design.PollingTime);
-
-            // Polling only the first one at the same polling time.
-            if (samePollingTimes.First().Design.Name != Design.Name) return;
-
-            foreach (var e in samePollingTimes)
+            if (!Design.IsPollingEnabled)
             {
-                foreach (var i in e.Design.Items)
-                {
-                    var sp = i.Split(',').Select(e => e.Trim()).ToArray();
-                    if (sp.Length != 2) continue;
-                    var field = Module.GetField(sp[1]);
-                    if (field == null) continue;
+                AddTarget(this);
+            }
+            else
+            {
+                var samePollingTimes = Module.GetFields().OfType<ORiN3MonitorField>().Where(e => e.Design.PollingTime == Design.PollingTime).ToList();
 
-                    var key = $"{e.Design.SettingModule}.{e.Design.ORiN3Field}.{sp[0]}";
-                    if (!_deviceAndFields.TryGetValue(key, out var list))
-                    {
-                        list = new();
-                        _deviceAndFields[key] = list;
-                    }
-                    list.Add(field);
-                }
+                // Polling only the first one at the same polling time.
+                if (samePollingTimes.First().Design.Name != Design.Name) return;
+
+                samePollingTimes.ForEach(e => e.AddTarget(e));
             }
             await Task.CompletedTask;
         }
 
-        public async Task PollingMonitor()
+        private void AddTarget(ORiN3MonitorField monitorField)
+        {
+            foreach (var i in monitorField.Design.Items)
+            {
+                var sp = i.Split(',').Select(e => e.Trim()).ToArray();
+                if (sp.Length != 2) continue;
+                var field = Module.GetField(sp[1]);
+                if (field == null) continue;
+
+                var key = $"{monitorField.Design.SettingModule}.{monitorField.Design.ORiN3Field}.{sp[0]}";
+                if (!_deviceAndFields.TryGetValue(key, out var list))
+                {
+                    list = new();
+                    _deviceAndFields[key] = list;
+                }
+                list.Add(field);
+            }
+        }
+
+        [ScriptName("Update")]
+        public async Task UpdateAsync()
         {
             var io = (IORiN3IO)Services.AppInfoService;
 

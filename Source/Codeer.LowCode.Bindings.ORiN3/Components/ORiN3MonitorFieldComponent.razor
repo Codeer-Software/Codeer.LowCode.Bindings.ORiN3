@@ -15,6 +15,7 @@
   {
     if (Field.Services.AppInfoService.IsDesignMode) return;
     if (!Field.IsPollingTarget) return;
+    if (!Field.Design.IsPollingEnabled) return;
 
     _timer = new System.Timers.Timer(Field.Design.PollingTime);
     _timer.Elapsed += OnTimerElapsed;
@@ -24,7 +25,7 @@
 
   private async void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
   {
-      await Field.PollingMonitor();
+      await Field.UpdateAsync();
   }
 
   public void Dispose()
