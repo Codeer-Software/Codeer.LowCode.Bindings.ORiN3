@@ -24,8 +24,7 @@ namespace ORiN3App.Server.Controllers
                     orin3Dic[$"{mod.Name}.{orin3.Name}"] = orin3;
                 }
             }
-            await orin3IO.SetDesignAsync(orin3Dic);
-            return await orin3IO.GetValuesAsync(devices);
+            return await orin3IO.GetValuesAsync(orin3Dic, devices);
         }
     }
 }

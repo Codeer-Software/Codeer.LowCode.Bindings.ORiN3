@@ -12,6 +12,36 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
     public class ORiN3IO(string designFileDirectory)
     {
         private readonly string _designFileDirector = designFileDirectory;
+        private readonly Dictionary<string, ORiN3IOInternal> _dic = [];
+
+        public async Task<Dictionary<string, ORiN3IOResult>> GetValuesAsync(Dictionary<string, ORiN3FieldDesign> designs, List<string> devices)
+        {
+            lock (_dic)
+            {
+                foreach (var design in designs)
+                {
+                    if (!_dic.ContainsKey(design.Key))
+                    {
+                        _dic[design.Key] = new ORiN3IOInternal(_designFileDirector);
+                    }
+                }
+            }
+
+            var getValuesTasks = new Task<Dictionary<string, ORiN3IOResult>>[designs.Count];
+            var couter = 0;
+            foreach (var it in designs)
+            {
+                getValuesTasks[couter++] = _dic[it.Key].GetValuesAsync(it.Value, devices);
+            }
+
+            var results = await Task.WhenAll(getValuesTasks).ConfigureAwait(false);
+            return results.SelectMany(d => d).GroupBy(pair => pair.Key).ToDictionary(g => g.Key, g => g.First().Value);
+        }
+    }
+
+    internal class ORiN3IOInternal(string designFileDirectory)
+    {
+        private readonly string _designFileDirector = designFileDirectory;
         private readonly AsyncLock _asyncLock = new();
         private ORiN3FieldDesign? _design;
         private IList<ORiN3Provider> _providers = [];
@@ -21,26 +51,60 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         private CancellationTokenSource? _updateBufferTaskCancellationTokenSource;
         private int _counter;
 
-        public async Task SetDesignAsync(Dictionary<string, ORiN3FieldDesign> designs)
+        public async Task<Dictionary<string, ORiN3IOResult>> GetValuesAsync(ORiN3FieldDesign design, List<string> devices)
         {
-            //TODO : kakei
-            var design = designs.First().Value;
-
-            using var cts = new CancellationTokenSource();
-            using (await _asyncLock.LockAsync(cts.Token).ConfigureAwait(false))
+            using (await _asyncLock.LockAsync())
             {
-                if (design == null)
-                {
-                    return;
-                }
-                else if (_initialized && ReferenceEquals(_design, design))
-                {
-                    return;
-                }
-                _design = design;
+                using var cts = new CancellationTokenSource();
+                await SetDesignAsync(design, cts.Token).ConfigureAwait(false);
 
-                await InitAsync(cts.Token).ConfigureAwait(false);
+                _counter = 0;
+
+                var dic = new Dictionary<string, ORiN3IOResult>();
+                foreach (var fullPath in devices)
+                {
+                    var sp = fullPath.Split('.');
+                    var settingModule = sp[0];
+                    var orin3Field = sp[1];
+                    var device = string.Join(".", fullPath.Split('.').Skip(2));
+
+                    // TODO
+                    //if (_design!.ModuleName != settingModule)
+                    //{
+                    //    continue;
+                    //}
+                    if (_design!.Name != orin3Field)
+                    {
+                        continue;
+                    }
+
+                    if (_variableBuffer.TryGetValue(device, out MultiTypeValue? value))
+                    {
+                        dic[fullPath] = new ORiN3IOResult { Value = value };
+                    }
+                    else
+                    {
+                        dic[fullPath] = new();
+                    }
+                }
+                await Task.CompletedTask;
+                return dic;
             }
+        }
+
+        private async Task SetDesignAsync(ORiN3FieldDesign design, CancellationToken token)
+        {
+            if (design == null)
+            {
+                return;
+            }
+            else if (_initialized && ReferenceEquals(_design, design))
+            {
+                return;
+            }
+            _design = design;
+
+            await InitAsync(token).ConfigureAwait(false);
         }
 
         private async Task InitAsync(CancellationToken token)
@@ -217,37 +281,6 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             o3TreeFile!.Position = 0;
             var jsonNode = JsonNode.Parse(o3TreeFile);
             return new O3TreeSetting(jsonNode!);
-        }
-
-        public async Task<Dictionary<string, ORiN3IOResult>> GetValuesAsync(List<string> devices)
-        {
-            using (await _asyncLock.LockAsync())
-            {
-                Debug.Assert(_initialized);
-                _counter = 0;
-
-                var dic = new Dictionary<string, ORiN3IOResult>();
-                foreach (var fullPath in devices)
-                {
-                    var sp = fullPath.Split('.');
-
-                    //TODO : kakei
-                    var settingModule = sp[0];
-                    var orin3Field = sp[1];
-                    var device = string.Join(".", fullPath.Split('.').Skip(2));
-
-                    if (_variableBuffer.TryGetValue(device, out MultiTypeValue? value))
-                    {
-                        dic[fullPath] = new ORiN3IOResult { Value = value };
-                    }
-                    else
-                    {
-                        dic[fullPath] = new();
-                    }
-                }
-                await Task.CompletedTask;
-                return dic;
-            }
         }
     }
 }

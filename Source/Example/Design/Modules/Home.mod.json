@@ -7,9 +7,9 @@
   "CanDelete": true,
   "Fields": [
     {
+      "PollingTime": 1000,
       "SettingModule": "Settings",
       "ORiN3Field": "localhost",
-      "PollingTime": 1000,
       "Items": [
         "R1,R1Field",
         "D1,D1Field",

@@ -70,25 +70,25 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
         private IEnumerable<ORiN3Object> EnumObject()
         {
-            foreach (var it in _objectTree.Children)
+            foreach (var child in _objectTree.Children)
             {
-                foreach (var it2 in EnumObject(it))
+                foreach (var it in EnumObject(child))
                 {
-                    yield return it2;
+                    yield return it;
                 }
-                yield return it;
+                yield return child;
             }
         }
 
-        private static IEnumerable<ORiN3Object> EnumObject(ORiN3Object orin3Object)
+        private static IEnumerable<ORiN3Object> EnumObject(ORiN3Object parent)
         {
-            foreach (var it in orin3Object.Children)
+            foreach (var child in parent.Children)
             {
-                foreach (var it2 in EnumObject(it))
+                foreach (var it in EnumObject(child))
                 {
-                    yield return it2;
+                    yield return it;
                 }
-                yield return it;
+                yield return child;
             }
         }
 
