@@ -25,7 +25,7 @@
 
   private async void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
   {
-      await Field.UpdateAsync();
+      await Field.UpdateAllAsync();
   }
 
   public void Dispose()

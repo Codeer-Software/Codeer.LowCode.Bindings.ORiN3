@@ -13,5 +13,5 @@ void R1Field_OnDataChanged()
 }
 void Button_OnClick()
 {
-    ORiN3Monitor.Update();
+    ORiN3Monitor.Update("R1", "D1", "D2");
 }

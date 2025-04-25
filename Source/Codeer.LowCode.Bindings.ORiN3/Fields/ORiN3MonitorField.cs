@@ -56,13 +56,19 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
             }
         }
 
+        [ScriptName("UpdateAll")]
+        public async Task UpdateAllAsync()
+            => await UpdateAsyncCore(_deviceAndFields.Keys.ToList());
+
         [ScriptName("Update")]
-        public async Task UpdateAsync()
+        public async Task UpdateAsync(params string[] devices)
+            => await UpdateAsyncCore(devices.Select(e=> $"{Design.SettingModule}.{Design.ORiN3Field}.{e}").ToList());
+
+        async Task UpdateAsyncCore(List<string> targetFullName)
         {
             var io = (IORiN3IO)Services.AppInfoService;
 
-            var result = await io.GetValues(_deviceAndFields.Keys.ToList());
-
+            var result = await io.GetValues(targetFullName);
             using var scope = Module.SuspendNotifyStateChanged();
 
             //TODO ; Show error message
