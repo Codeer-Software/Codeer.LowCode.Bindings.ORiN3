@@ -29,7 +29,7 @@
       "OnSearchDataChanged": "",
       "DisplayName": "",
       "IsRequired": false,
-      "OnDataChanged": "",
+      "OnDataChanged": "R1Field_OnDataChanged",
       "Name": "R1Field",
       "ClassName": "",
       "ContextMenu": "",
@@ -64,6 +64,15 @@
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.TextFieldDesign"
+    },
+    {
+      "ResourcePath": "",
+      "ObjectFit": "Contain",
+      "OnClick": "",
+      "Name": "R1Image",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ImageViewerFieldDesign"
     }
   ],
   "UserWriteCondition": {
@@ -80,7 +89,7 @@
   },
   "DetailLayouts": {
     "": {
-      "OnBeforeInitialization": "",
+      "OnBeforeInitialization": "DetailLayoutDesign_OnBeforeInitialization",
       "OnAfterInitialization": "",
       "DataOnlyFields": [],
       "ClassName": "",
@@ -248,6 +257,7 @@
           },
           {
             "IsWrap": false,
+            "Height": 146,
             "Margin": {},
             "GridRowType": "Normal",
             "CanResize": false,
@@ -255,6 +265,15 @@
             "IsRowMarginRemoved": false,
             "Columns": [
               {
+                "Layout": {
+                  "FieldName": "R1Image",
+                  "FontFamily": "",
+                  "Color": "",
+                  "BackgroundColor": "",
+                  "Name": "",
+                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                },
+                "Width": 185,
                 "Padding": {},
                 "BackgroundColor": "",
                 "BorderStyle": {
