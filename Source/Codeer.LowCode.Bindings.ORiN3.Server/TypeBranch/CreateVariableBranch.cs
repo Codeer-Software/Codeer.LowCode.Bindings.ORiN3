@@ -4,22 +4,14 @@ using Design.ORiN3.Provider.V1.Characteristic;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Server.TypeBranch
 {
-    internal class CreateVariableBranch : IValueTypeBranchAsync
+    internal class CreateVariableBranch(IChildCreator parent, string name, string type, string Option) : IValueTypeBranchAsync
     {
-        private readonly IChildCreator _parent;
-        private readonly string _name;
-        private readonly string _type;
-        private readonly string _option;
+        private readonly IChildCreator _parent = parent;
+        private readonly string _name = name;
+        private readonly string _type = type;
+        private readonly string _option = Option;
 
-        public IVariable Variable { get; private set; }
-
-        public CreateVariableBranch(IChildCreator parent, string name, string type, string Option)
-        {
-            _parent = parent;
-            _name = name;
-            _type = type;
-            _option = Option;
-        }
+        public IVariable? Variable { get; private set; }
 
         public async Task CaseOfBoolAsync(CancellationToken token) => Variable = await _parent.CreateVariableAsync<bool>(_name, _type, _option, token).ConfigureAwait(false);
         public async Task CaseOfBoolArrayAsync(CancellationToken token) => Variable = await _parent.CreateVariableAsync<bool[]>(_name, _type, _option, token).ConfigureAwait(false);

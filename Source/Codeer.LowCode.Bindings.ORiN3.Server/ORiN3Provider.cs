@@ -222,7 +222,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
             var branch = new CreateVariableBranch((IChildCreator)parent.Self, targetSetting.Name, targetSetting.Type, targetSetting.Option);
             await TypeSwitcher.ExecuteAsync(targetSetting.ValueType, branch, token);
-            return branch.Variable;
+            return branch.Variable!;
         }
 
         public void Dispose()

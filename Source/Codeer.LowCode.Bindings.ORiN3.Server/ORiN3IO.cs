@@ -6,11 +6,19 @@ using Colda.CommonUtilities.Tasks;
 using Design.ORiN3.Provider.V1.Base;
 using System.Diagnostics;
 using System.Text.Json.Nodes;
+using static Codeer.LowCode.Bindings.ORiN3.Server.ORiN3IO;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Server
 {
     public class ORiN3IO(string designFileDirectory)
     {
+        internal record Names(string ModuleName, string FieldName, string DeviceName);
+        internal static Names ToNames(string target)
+        {
+            var sp = target.Split('.');
+            return new Names(sp[0], sp[1], string.Join(".", target.Split('.').Skip(2)));
+        }
+
         private readonly string _designFileDirector = designFileDirectory;
         private readonly Dictionary<string, ORiN3IOInternal> _dic = [];
 
@@ -22,7 +30,8 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 {
                     if (!_dic.ContainsKey(design.Key))
                     {
-                        _dic[design.Key] = new ORiN3IOInternal(_designFileDirector);
+                        var names = ToNames(design.Key);
+                        _dic[design.Key] = new ORiN3IOInternal(names.ModuleName, names.FieldName, _designFileDirector);
                     }
                 }
             }
@@ -39,8 +48,10 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         }
     }
 
-    internal class ORiN3IOInternal(string designFileDirectory)
+    internal class ORiN3IOInternal(string moduleName, string fieldName, string designFileDirectory)
     {
+        private readonly string _moduleName = moduleName;
+        private readonly string _fieldName = fieldName;
         private readonly string _designFileDirector = designFileDirectory;
         private readonly AsyncLock _asyncLock = new();
         private ORiN3FieldDesign? _design;
@@ -63,22 +74,13 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 var dic = new Dictionary<string, ORiN3IOResult>();
                 foreach (var fullPath in devices)
                 {
-                    var sp = fullPath.Split('.');
-                    var settingModule = sp[0];
-                    var orin3Field = sp[1];
-                    var device = string.Join(".", fullPath.Split('.').Skip(2));
-
-                    // TODO
-                    //if (_design!.ModuleName != settingModule)
-                    //{
-                    //    continue;
-                    //}
-                    if (_design!.Name != orin3Field)
+                    var names = ToNames(fullPath);
+                    if (_moduleName != names.ModuleName || _fieldName != names.FieldName)
                     {
                         continue;
                     }
 
-                    if (_variableBuffer.TryGetValue(device, out MultiTypeValue? value))
+                    if (_variableBuffer.TryGetValue(names.DeviceName, out MultiTypeValue? value))
                     {
                         dic[fullPath] = new ORiN3IOResult { Value = value };
                     }

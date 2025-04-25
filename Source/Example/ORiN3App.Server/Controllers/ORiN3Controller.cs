@@ -16,7 +16,7 @@ namespace ORiN3App.Server.Controllers
         [HttpPost("values")]
         public async Task<Dictionary<string, ORiN3IOResult>> GetValuesAsync(List<string> devices)
         {
-            Dictionary<string, ORiN3FieldDesign> orin3Dic = new();
+            Dictionary<string, ORiN3FieldDesign> orin3Dic = [];
             foreach (var mod in DesignerService.GetDesignData().Modules.ToList())
             {
                 foreach (var orin3 in mod.Fields.OfType<ORiN3FieldDesign>())
