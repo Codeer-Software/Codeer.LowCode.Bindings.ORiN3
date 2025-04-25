@@ -234,7 +234,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                                 var values = await provider.GetValuesAsync(token).ConfigureAwait(false);
                                 foreach (var value in values)
                                 {
-                                    _variableBuffer[value.Key] = MultiTypeValue.Create(value.Value);
+                                    _variableBuffer[value.Key] = CreateORiN3Value(value.Value);
                                 }
                             }
                             catch (TaskCanceledException)
@@ -258,6 +258,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                 Debug.WriteLine(ex);
             }
         }
+
+        static MultiTypeValue CreateORiN3Value(object? src)
+            => src == null ? new NullValue() : (MultiTypeValue)Activator.CreateInstance(typeof(ORiN3Value<>).MakeGenericType(src.GetType()), src)!;
 
         private static Dictionary<string, MultiTypeValue> CreateVariableBuffer(O3Setting o3Setting)
         {
