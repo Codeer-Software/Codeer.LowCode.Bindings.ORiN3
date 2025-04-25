@@ -14,7 +14,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
         public override FieldSubmitData GetSubmitData() => new();
         public override async Task SetDataAsync(FieldDataBase? fieldDataBase) => await Task.CompletedTask;
 
-        Dictionary<string, FieldBase> _deviceAndFields = new();
+        Dictionary<string, List<FieldBase>> _deviceAndFields = new();
 
         internal bool IsPollingTarget => _deviceAndFields.Any();
 
@@ -33,7 +33,14 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
                     if (sp.Length != 2) continue;
                     var field = Module.GetField(sp[1]);
                     if (field == null) continue;
-                    _deviceAndFields[$"{e.Design.SettingModule}.{e.Design.ORiN3Field}.{sp[0]}"] = field;
+
+                    var key = $"{e.Design.SettingModule}.{e.Design.ORiN3Field}.{sp[0]}";
+                    if (!_deviceAndFields.TryGetValue(key, out var list))
+                    {
+                        list = new();
+                        _deviceAndFields[key] = list;
+                    }
+                    list.Add(field);
                 }
             }
             await Task.CompletedTask;
@@ -50,13 +57,16 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
             //TODO ; Show error message
             foreach (var e in result)
             {
-                if (_deviceAndFields.TryGetValue(e.Key, out var field))
+                if (_deviceAndFields.TryGetValue(e.Key, out var list))
                 {
-                    try
+                    foreach (var field in list)
                     {
-                        await SetValue(field, e.Value.Value);
+                        try
+                        {
+                            await SetValue(field, e.Value.Value);
+                        }
+                        catch { }
                     }
-                    catch { }
                 }
             }
         }
@@ -65,8 +75,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
         async Task SetValue(FieldBase field, MultiTypeValue value)
         {
             if (field is BooleanField booleanField) await booleanField.SetValueAsync(Convert.ToBoolean(value.GetValue()));
-            if (field is NumberField numberField) await numberField.SetValueAsync(Convert.ToDecimal(value.GetValue()));
-            if (field is TextField textField) await textField.SetValueAsync(value.GetValue()?.ToString()??string.Empty);
+            else if (field is NumberField numberField) await numberField.SetValueAsync(Convert.ToDecimal(value.GetValue()));
+            else if (field is TextField textField) await textField.SetValueAsync(value.GetValue()?.ToString() ?? string.Empty);
+            else if (field is ValueImageField image) image.SetValue(Convert.ToDecimal(value.GetValue()));
         }
     }
 }

@@ -13,7 +13,8 @@
       "Items": [
         "R1,R1Field",
         "D1,D1Field",
-        "D2,D2Field"
+        "D2,D2Field",
+        "D1,D1ValueImage"
       ],
       "Name": "ORiN3Monitor",
       "ClassName": "",
@@ -67,12 +68,23 @@
     },
     {
       "ResourcePath": "",
-      "ObjectFit": "Contain",
+      "ObjectFit": "None",
       "OnClick": "",
       "Name": "R1Image",
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ImageViewerFieldDesign"
+    },
+    {
+      "ObjectFit": "None",
+      "Items": [
+        "0,off.png",
+        "1, on.png"
+      ],
+      "Name": "D1ValueImage",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Bindings.ORiN3.Designs.ValueImageFieldDesign"
     }
   ],
   "UserWriteCondition": {
@@ -257,7 +269,7 @@
           },
           {
             "IsWrap": false,
-            "Height": 146,
+            "Height": 253,
             "Margin": {},
             "GridRowType": "Normal",
             "CanResize": false,
@@ -273,7 +285,7 @@
                   "Name": "",
                   "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
                 },
-                "Width": 185,
+                "Width": 221,
                 "Padding": {},
                 "BackgroundColor": "",
                 "BorderStyle": {
@@ -286,6 +298,15 @@
                 "Border": "None"
               },
               {
+                "Layout": {
+                  "FieldName": "D1ValueImage",
+                  "FontFamily": "",
+                  "Color": "",
+                  "BackgroundColor": "",
+                  "Name": "",
+                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                },
+                "Width": 220,
                 "Padding": {},
                 "BackgroundColor": "",
                 "BorderStyle": {

@@ -1,0 +1,34 @@
+@using Codeer.LowCode.Bindings.ORiN3.Designs
+@using Codeer.LowCode.Bindings.ORiN3.Fields
+@using Codeer.LowCode.Blazor.Components
+@using Codeer.LowCode.Blazor.Repository.Design
+@inherits FieldComponentBase<ValueImageField>
+
+@if (!string.IsNullOrEmpty(Field.Base64Data))
+{
+  <img src="@($"data:image/{Field.ImageExtension};base64,{Field.Base64Data}")" alt="Base64 Image" class="mt-1" style="@GetStyleString()" />
+}
+else if (Field.Services.AppInfoService.IsDesignMode)
+{
+  <span>
+    ResourcePath is not set
+  </span>
+}
+
+@code {
+  private string? GetStyleString() {
+    var s = "object-fit:" + Field.Design.ObjectFit switch {
+      ObjectFit.None => "none",
+      ObjectFit.Contain => "contain",
+      ObjectFit.Cover => "cover",
+      ObjectFit.Fill => "fill",
+      ObjectFit.ScaleDown => "scale-down",
+      _ => throw new ArgumentOutOfRangeException()
+    };
+    s += Field.Design.ObjectFit switch {
+      ObjectFit.None => ";object-position: top left",
+      _ => "",
+    };
+    return s;
+  }
+}
