@@ -11,6 +11,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Designs
     {
         public int PollingTime { get; set; } = 1000;
 
+        [Designer]
+        public bool IsCallbackEnabled { get; set; }
+
         [Designer(DisplayName = "Polling Interval (ms)", CandidateType = CandidateType.Variable)]
         public int PollingIntervalMSec { get; set; } = 1000;
         [Designer(DisplayName = "Inactivity Timeout (s)", CandidateType = CandidateType.Variable)]

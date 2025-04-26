@@ -11,7 +11,12 @@ namespace ORiN3App.Server.Controllers
     [Route("api/orin3")]
     public class ORiN3Controller : ControllerBase
     {
-        private static readonly ORiN3IO orin3IO = new(SystemConfig.Instance.DesignFileDirectory);
+        private static readonly ORiN3IO orin3IO;
+        static ORiN3Controller()
+        {
+            orin3IO = new(SystemConfig.Instance.DesignFileDirectory);
+            orin3IO.CallBack = async _ => await Task.CompletedTask;//ORiN3FieldDesign, Values
+        }
 
         [HttpPost("values")]
         public async Task<Dictionary<string, ORiN3IOResult>> GetValuesAsync(List<string> devices)

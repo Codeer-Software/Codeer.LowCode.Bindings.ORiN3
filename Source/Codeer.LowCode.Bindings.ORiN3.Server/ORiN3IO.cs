@@ -12,6 +12,8 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 {
     public class ORiN3IO(string designFileDirectory)
     {
+        public Func<int, Task>? CallBack { get; set; }
+
         internal record Names(string ModuleName, string FieldName, string DeviceName);
         internal static Names ToNames(string target)
         {
