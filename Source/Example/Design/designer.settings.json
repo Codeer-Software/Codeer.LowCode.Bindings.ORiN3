@@ -1,7 +1,7 @@
 {
   "DataSources": [
     {
-      "Name": "SampleSQLite",
+      "Name": "Orin3Test",
       "DataSourceType": "SQLite"
     }
   ],

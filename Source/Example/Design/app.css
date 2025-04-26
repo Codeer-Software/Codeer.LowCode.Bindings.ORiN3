@@ -1,0 +1,4 @@
+/* ヘッダー行だけ黒地＋白文字にする例 */
+.page[data-pageframe="Demo1"] thead.table-light {
+    --bs-table-bg:    #000000;  /* 背景 */
+}
