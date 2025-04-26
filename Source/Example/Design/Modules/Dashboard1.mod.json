@@ -129,6 +129,15 @@
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ListFieldDesign"
+    },
+    {
+      "ResourcePath": "building.png",
+      "ObjectFit": "None",
+      "OnClick": "",
+      "Name": "ImageViewer",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ImageViewerFieldDesign"
     }
   ],
   "UserWriteCondition": {
@@ -165,11 +174,11 @@
         "Rows": [
           {
             "IsWrap": false,
-            "Height": 423,
+            "Height": 918,
             "Margin": {},
             "GridRowType": "Normal",
-            "CanResize": false,
-            "BackgroundColor": "",
+            "CanResize": true,
+            "BackgroundColor": "#191A1E",
             "IsRowMarginRemoved": false,
             "Columns": [
               {
@@ -184,15 +193,61 @@
                 "Padding": {},
                 "BackgroundColor": "#191A1E",
                 "BorderStyle": {
-                  "Right": 4,
+                  "Bottom": 5,
                   "LeftColor": "",
                   "TopColor": "",
-                  "RightColor": "#000000",
-                  "BottomColor": ""
+                  "RightColor": "",
+                  "BottomColor": "#000000"
                 },
                 "CanResize": true,
                 "Border": "None"
               },
+              {
+                "Layout": {
+                  "Elements": [
+                    {
+                      "Layout": {
+                        "FieldName": "ImageViewer",
+                        "FontFamily": "",
+                        "Color": "",
+                        "BackgroundColor": "",
+                        "Name": "",
+                        "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                      },
+                      "Left": 0,
+                      "Top": 0
+                    }
+                  ],
+                  "IsBordered": false,
+                  "ScrollDirection": "Unset",
+                  "BackgroundColor": "",
+                  "Name": "",
+                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.CanvasLayoutDesign"
+                },
+                "Width": 1073,
+                "Padding": {},
+                "BackgroundColor": "#191A1E",
+                "BorderStyle": {
+                  "Bottom": 5,
+                  "LeftColor": "",
+                  "TopColor": "",
+                  "RightColor": "",
+                  "BottomColor": "#000000"
+                },
+                "CanResize": false,
+                "Border": "None"
+              }
+            ]
+          },
+          {
+            "IsWrap": false,
+            "Height": 423,
+            "Margin": {},
+            "GridRowType": "Normal",
+            "CanResize": false,
+            "BackgroundColor": "",
+            "IsRowMarginRemoved": false,
+            "Columns": [
               {
                 "Layout": {
                   "FieldName": "ApexChart",
