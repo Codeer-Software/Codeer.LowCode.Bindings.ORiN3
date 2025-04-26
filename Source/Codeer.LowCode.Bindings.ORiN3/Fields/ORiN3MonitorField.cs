@@ -64,27 +64,37 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
         public async Task UpdateAsync(params string[] devices)
             => await UpdateAsyncCore(devices.Select(e=> $"{Design.SettingModule}.{Design.ORiN3Field}.{e}").ToList());
 
+        bool _updating;
         async Task UpdateAsyncCore(List<string> targetFullName)
         {
-            var io = (IORiN3IO)Services.AppInfoService;
-
-            var result = await io.GetValues(targetFullName);
-            using var scope = Module.SuspendNotifyStateChanged();
-
-            //TODO ; Show error message
-            foreach (var e in result)
+            if (_updating) return;
+            _updating = true;
+            try
             {
-                if (_deviceAndFields.TryGetValue(e.Key, out var list))
+                var io = (IORiN3IO)Services.AppInfoService;
+
+                var result = await io.GetValues(targetFullName);
+                using var scope = Module.SuspendNotifyStateChanged();
+
+                //TODO ; Show error message
+                foreach (var e in result)
                 {
-                    foreach (var field in list)
+                    if (_deviceAndFields.TryGetValue(e.Key, out var list))
                     {
-                        try
+                        foreach (var field in list)
                         {
-                            await SetValue(field, e.Value.Value);
+                            try
+                            {
+                                await SetValue(field, e.Value.Value);
+                            }
+                            catch { }
                         }
-                        catch { }
                     }
                 }
+            }
+            finally
+            {
+                _updating = false;
             }
         }
 
