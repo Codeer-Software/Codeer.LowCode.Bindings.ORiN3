@@ -193,10 +193,11 @@
                 "Padding": {},
                 "BackgroundColor": "#191A1E",
                 "BorderStyle": {
+                  "Right": 5,
                   "Bottom": 5,
                   "LeftColor": "",
                   "TopColor": "",
-                  "RightColor": "",
+                  "RightColor": "#000000",
                   "BottomColor": "#000000"
                 },
                 "CanResize": true,
@@ -219,12 +220,12 @@
                     }
                   ],
                   "IsBordered": false,
-                  "ScrollDirection": "Unset",
+                  "ScrollDirection": "Horizontal",
                   "BackgroundColor": "",
                   "Name": "",
                   "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.CanvasLayoutDesign"
                 },
-                "Width": 1073,
+                "Width": 1000,
                 "Padding": {},
                 "BackgroundColor": "#191A1E",
                 "BorderStyle": {
