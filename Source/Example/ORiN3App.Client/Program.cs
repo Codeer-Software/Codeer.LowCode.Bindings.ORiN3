@@ -1,3 +1,5 @@
+using ApexCharts;
+using Codeer.LowCode.Bindings.ApexCharts.Designs;
 using Codeer.LowCode.Bindings.ORiN3.Fields;
 using Codeer.LowCode.Blazor.RequestInterfaces;
 using Microsoft.AspNetCore.Components.Web;
@@ -6,6 +8,8 @@ using ORiN3App.Client;
 using ORiN3App.Client.Shared;
 using ORiN3App.Client.Shared.Services;
 
+typeof(ApexChartFieldDesign).ToString();
+typeof(SeriesType).ToString();
 typeof(ORiN3MonitorField).ToString();
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

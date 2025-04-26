@@ -3,6 +3,10 @@ using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
 using System.Windows;
+using ApexCharts;
+using Codeer.LowCode.Bindings.ApexCharts.Designer.Controls;
+using Codeer.LowCode.Bindings.ApexCharts.Designs;
+using Codeer.LowCode.Bindings.ApexCharts.Models;
 using Codeer.LowCode.Bindings.ORiN3.Designs;
 using Codeer.LowCode.Blazor.Components.AppParts.Loading;
 using Codeer.LowCode.Blazor.DataIO.Db.Definition;
@@ -35,7 +39,11 @@ namespace ORiN3App.Designer
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            typeof(ORiN3FieldDesign).ToString();
+            typeof(ORiN3FieldDesign).ToString(); 
+            typeof(ApexChartFieldDesign).ToString();
+            typeof(SeriesType).ToString();
+            Services.AddApexCharts();
+            PropertyTypeManager.AddPropertyControl<ChartSeries, ChartSeriesPropertyControl>();
 
             AISettings.Instance.OpenAIEndPoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_ENDPOINT") ?? string.Empty;
             AISettings.Instance.OpenAIKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY") ?? string.Empty;

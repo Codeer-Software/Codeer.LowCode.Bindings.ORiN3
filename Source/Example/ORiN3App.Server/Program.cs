@@ -1,5 +1,7 @@
 using System.Globalization;
 using System.Text.Json.Serialization;
+using ApexCharts;
+using Codeer.LowCode.Bindings.ApexCharts.Designs;
 using Codeer.LowCode.Bindings.ORiN3.Fields;
 using Codeer.LowCode.Blazor.Json;
 using Codeer.LowCode.Blazor.License;
@@ -12,6 +14,8 @@ using ORiN3App.Server.Services.DataChangeHistory;
 using ORiN3App.Server.Services.FileManagement;
 using PdfSharp.Fonts;
 
+typeof(ApexChartFieldDesign).ToString();
+typeof(SeriesType).ToString();
 //load dll.
 typeof(ColorPickerField).ToString();
 typeof(ORiN3MonitorField).ToString();
