@@ -162,6 +162,30 @@
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Bindings.ApexCharts.Designs.ApexRadialChartFieldDesign"
+    },
+    {
+      "SeriesType": "Pie",
+      "SeriesField": "Percentage",
+      "SearchCondition": {
+        "SortFieldVariable": "",
+        "SortDescending": false,
+        "SelectFields": [],
+        "ModuleName": "SampleChartData2",
+        "Condition": {
+          "IsOrMatch": false,
+          "Children": [],
+          "Name": "",
+          "TypeFullName": "Codeer.LowCode.Blazor.Repository.Match.MultiMatchCondition"
+        }
+      },
+      "DisplayName": "",
+      "CategoryField": "Name",
+      "SeriesFractionDigits": 2,
+      "ShowLegend": true,
+      "Name": "ApexRadialChart1",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Bindings.ApexCharts.Designs.ApexRadialChartFieldDesign"
     }
   ],
   "UserWriteCondition": {
@@ -309,6 +333,20 @@
                       },
                       "Left": 0,
                       "Top": 0
+                    },
+                    {
+                      "Layout": {
+                        "FieldName": "ApexRadialChart1",
+                        "FontFamily": "",
+                        "Color": "",
+                        "BackgroundColor": "",
+                        "Name": "",
+                        "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                      },
+                      "Left": 134,
+                      "Top": 122,
+                      "Width": 157,
+                      "Height": 101
                     }
                   ],
                   "IsBordered": false,
