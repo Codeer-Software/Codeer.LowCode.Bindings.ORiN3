@@ -8,6 +8,7 @@
   "Fields": [
     {
       "PollingTime": 1000,
+      "IsCallbackEnabled": false,
       "PollingIntervalMSec": 1000,
       "InactivityTimeout": 30,
       "O3JsonFilePath": "o3.json",
