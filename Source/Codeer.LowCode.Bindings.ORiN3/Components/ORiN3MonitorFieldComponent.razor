@@ -28,8 +28,9 @@
       await Field.UpdateAllAsync();
   }
 
-  public void Dispose()
+  public override async ValueTask DisposeAsync()
   {
     _timer?.Dispose();
+    await base.DisposeAsync();
   }
 }
