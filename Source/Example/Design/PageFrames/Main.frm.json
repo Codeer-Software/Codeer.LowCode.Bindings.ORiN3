@@ -10,7 +10,57 @@
       "Icon": "",
       "ResourcePath": ""
     },
-    "Links": [],
+    "Links": [
+      {
+        "Title": "Demo1",
+        "Icon": "",
+        "ModulePageType": "Auto",
+        "PageFrame": "Demo1",
+        "Module": "Dashboard1",
+        "Id": "",
+        "Parameters": "",
+        "ListPageDesign": {
+          "SearchLayoutName": "",
+          "PageTitle": "",
+          "CanBulkDataUpdate": false,
+          "CanBulkDataDownload": false,
+          "UseSubmitButton": false,
+          "ListFieldDesign": {
+            "LayoutName": "",
+            "CanNavigateToDetail": true,
+            "IsStriped": false,
+            "DisplayName": "",
+            "SearchCondition": {
+              "LimitCount": 50,
+              "SortFieldVariable": "",
+              "SortDescending": false,
+              "SelectFields": [],
+              "ModuleName": ""
+            },
+            "PagerPosition": "Bottom",
+            "UseIndexSort": false,
+            "DeleteTogether": false,
+            "CanCreate": false,
+            "CanUpdate": false,
+            "CanDelete": false,
+            "CanUserSort": true,
+            "CanSelect": false,
+            "OnDataChanged": "",
+            "OnSearchDataChanged": "",
+            "OnSelectedIndexChanged": "",
+            "OnSelectedIndexChanging": "",
+            "Name": "",
+            "ClassName": "",
+            "ContextMenu": "",
+            "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ListFieldDesign"
+          }
+        },
+        "DetailPageDesign": {
+          "PageTitle": "",
+          "LayoutName": ""
+        }
+      }
+    ],
     "FontFamily": "",
     "Color": "#ffffff",
     "BackgroundColorStart": "#052767",
