@@ -138,6 +138,24 @@
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ImageViewerFieldDesign"
+    },
+    {
+      "SeriesType": "Pie",
+      "SeriesField": "Percentage",
+      "SearchCondition": {
+        "SortFieldVariable": "",
+        "SortDescending": false,
+        "SelectFields": [],
+        "ModuleName": "SampleChartData2"
+      },
+      "DisplayName": "",
+      "CategoryField": "Name",
+      "SeriesFractionDigits": 2,
+      "ShowLegend": true,
+      "Name": "ApexRadialChart",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Bindings.ApexCharts.Designs.ApexRadialChartFieldDesign"
     }
   ],
   "UserWriteCondition": {
@@ -174,7 +192,7 @@
         "Rows": [
           {
             "IsWrap": false,
-            "Height": 918,
+            "Height": 700,
             "Margin": {},
             "GridRowType": "Normal",
             "CanResize": true,
@@ -183,12 +201,80 @@
             "Columns": [
               {
                 "Layout": {
-                  "FieldName": "List",
-                  "FontFamily": "",
-                  "Color": "",
-                  "BackgroundColor": "#000000",
                   "Name": "",
-                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                  "Padding": {},
+                  "IsBordered": false,
+                  "IsFlowLayout": false,
+                  "IsFillAvailable": true,
+                  "IsExpandable": false,
+                  "ExpanderLabel": "",
+                  "IsExpanderDefaultOpened": false,
+                  "ScrollDirection": "Unset",
+                  "BackgroundColor": "",
+                  "Rows": [
+                    {
+                      "IsWrap": false,
+                      "Margin": {},
+                      "GridRowType": "Normal",
+                      "CanResize": false,
+                      "BackgroundColor": "",
+                      "IsRowMarginRemoved": false,
+                      "Columns": [
+                        {
+                          "Layout": {
+                            "FieldName": "List",
+                            "FontFamily": "",
+                            "Color": "",
+                            "BackgroundColor": "#000000",
+                            "Name": "",
+                            "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                          },
+                          "Padding": {},
+                          "BackgroundColor": "",
+                          "BorderStyle": {
+                            "LeftColor": "",
+                            "TopColor": "",
+                            "RightColor": "",
+                            "BottomColor": ""
+                          },
+                          "CanResize": false,
+                          "Border": "None"
+                        }
+                      ]
+                    },
+                    {
+                      "IsWrap": false,
+                      "Height": 392,
+                      "Margin": {},
+                      "GridRowType": "Normal",
+                      "CanResize": false,
+                      "BackgroundColor": "",
+                      "IsRowMarginRemoved": false,
+                      "Columns": [
+                        {
+                          "Layout": {
+                            "FieldName": "ApexRadialChart",
+                            "FontFamily": "",
+                            "Color": "",
+                            "BackgroundColor": "",
+                            "Name": "",
+                            "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                          },
+                          "Padding": {},
+                          "BackgroundColor": "",
+                          "BorderStyle": {
+                            "LeftColor": "",
+                            "TopColor": "",
+                            "RightColor": "",
+                            "BottomColor": ""
+                          },
+                          "CanResize": false,
+                          "Border": "None"
+                        }
+                      ]
+                    }
+                  ],
+                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.GridLayoutDesign"
                 },
                 "Padding": {},
                 "BackgroundColor": "#191A1E",

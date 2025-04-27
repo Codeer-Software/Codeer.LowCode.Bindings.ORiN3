@@ -3,7 +3,7 @@
   "Name": "Demo1",
   "Description": "",
   "Left": {
-    "IsVisible": false,
+    "IsVisible": true,
     "Home": {
       "Type": "None",
       "Text": "",
@@ -13,10 +13,11 @@
     "Links": [],
     "FontFamily": "",
     "Color": "#ffffff",
-    "BackgroundColorStart": "#052767",
-    "BackgroundColorEnd": "#3a0647",
+    "BackgroundColorStart": "#191a1e",
+    "BackgroundColorEnd": "#191a1e",
+    "Width": 60,
     "UserName": "",
-    "ModuleName": ""
+    "ModuleName": "SideBar"
   },
   "Right": {
     "IsVisible": false,
@@ -35,7 +36,7 @@
     "ModuleName": ""
   },
   "Header": {
-    "IsVisible": true,
+    "IsVisible": false,
     "FontFamily": "",
     "Color": "#ffffff",
     "BackgroundColor": "#000000",
@@ -100,12 +101,72 @@
           "PageTitle": "",
           "LayoutName": ""
         }
+      },
+      {
+        "Title": "SampleChartData2",
+        "Icon": "",
+        "ModulePageType": "Auto",
+        "PageFrame": "",
+        "Module": "SampleChartData2",
+        "Id": "",
+        "Parameters": "",
+        "ListPageDesign": {
+          "SearchLayoutName": "",
+          "PageTitle": "",
+          "CanBulkDataUpdate": true,
+          "CanBulkDataDownload": true,
+          "UseSubmitButton": false,
+          "ListFieldDesign": {
+            "LayoutName": "",
+            "CanNavigateToDetail": true,
+            "IsStriped": false,
+            "DisplayName": "",
+            "SearchCondition": {
+              "LimitCount": 50,
+              "SortFieldVariable": "",
+              "SortDescending": false,
+              "SelectFields": [],
+              "ModuleName": "",
+              "Condition": {
+                "IsOrMatch": false,
+                "Children": [],
+                "Name": "",
+                "TypeFullName": "Codeer.LowCode.Blazor.Repository.Match.MultiMatchCondition"
+              }
+            },
+            "PagerPosition": "Bottom",
+            "UseIndexSort": false,
+            "DeleteTogether": false,
+            "CanCreate": false,
+            "CanUpdate": false,
+            "CanDelete": false,
+            "CanUserSort": true,
+            "CanSelect": false,
+            "OnDataChanged": "",
+            "OnSearchDataChanged": "",
+            "OnSelectedIndexChanged": "",
+            "OnSelectedIndexChanging": "",
+            "Name": "",
+            "ClassName": "",
+            "ContextMenu": "",
+            "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ListFieldDesign"
+          }
+        },
+        "DetailPageDesign": {
+          "PageTitle": "",
+          "LayoutName": ""
+        }
       }
     ],
     "UserName": "",
     "ModuleName": ""
   },
-  "Padding": {},
+  "Padding": {
+    "Left": 8,
+    "Top": 20,
+    "Right": 8,
+    "Bottom": 8
+  },
   "UserReadCondition": {
     "ModuleName": ""
   },
