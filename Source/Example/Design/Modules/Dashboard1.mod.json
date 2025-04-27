@@ -146,7 +146,13 @@
         "SortFieldVariable": "",
         "SortDescending": false,
         "SelectFields": [],
-        "ModuleName": "SampleChartData2"
+        "ModuleName": "SampleChartData2",
+        "Condition": {
+          "IsOrMatch": false,
+          "Children": [],
+          "Name": "",
+          "TypeFullName": "Codeer.LowCode.Blazor.Repository.Match.MultiMatchCondition"
+        }
       },
       "DisplayName": "",
       "CategoryField": "Name",
@@ -312,6 +318,19 @@
                   "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.CanvasLayoutDesign"
                 },
                 "Width": 1000,
+                "Padding": {},
+                "BackgroundColor": "#191A1E",
+                "BorderStyle": {
+                  "Bottom": 5,
+                  "LeftColor": "",
+                  "TopColor": "",
+                  "RightColor": "",
+                  "BottomColor": "#000000"
+                },
+                "CanResize": false,
+                "Border": "None"
+              },
+              {
                 "Padding": {},
                 "BackgroundColor": "#191A1E",
                 "BorderStyle": {
