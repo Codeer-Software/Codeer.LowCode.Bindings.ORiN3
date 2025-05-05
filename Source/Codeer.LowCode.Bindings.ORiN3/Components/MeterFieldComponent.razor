@@ -9,13 +9,13 @@
 <div @ref="_element">
   <svg width=@Width height=@Height viewBox=@($"0 0 {Width} {Height}")>
 
-    <path d=@Arc1Pram fill=@Color1 />
+    <path d=@Arc1Pram fill=@Color />
 
     <!-- By drawing a small circle, it looks like a meter. -->
     <path d=@Arc2Pram fill=@BackColor />
 
     <!-- TODO font-->
-    <text x=@Radius y=@(Radius - 4) text-anchor="middle" font-size=@FontSize fill=@Color1>
+    <text x=@Radius y=@(Radius - 4) text-anchor="middle" font-size=@FontSize fill=@Color>
       @((int)(Field.Value * 100))
     </text>
   </svg>
@@ -27,9 +27,9 @@
 
   double Width { get; set; }
 
-  string Color1 => Field.Design.MeterColor;
+  string Color => Field.Color.Or(Field.GetFontAppearance()?.Color).Or("#ff4d4d")!;
 
-  string BackColor => "#ffffff";
+  string BackColor => Field.BackgroundColor.Or(DesignHelper.GetBackgroundColor(Field)).Or("#ffffff")!;
 
   double FontSize => (Width / 240) * 42;
   double Radius => Width / 2;

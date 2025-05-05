@@ -107,7 +107,6 @@
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ButtonFieldDesign"
     },
     {
-      "MeterColor": "#ff4d4d",
       "Name": "Meter",
       "ClassName": "",
       "ContextMenu": "",
@@ -392,7 +391,7 @@
                 "Layout": {
                   "FieldName": "Meter",
                   "FontFamily": "",
-                  "Color": "",
+                  "Color": "#00ff00",
                   "BackgroundColor": "",
                   "Name": "",
                   "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
