@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.8" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Codeer.LowCode.Blazor" Version="1.2.1" />
+    <PackageReference Include="Codeer.LowCode.Blazor" Version="1.2.2" />
     <ProjectReference Include="..\ORiN3App.Client.Shared\ORiN3App.Client.Shared.csproj" />
   </ItemGroup>
   <PropertyGroup>

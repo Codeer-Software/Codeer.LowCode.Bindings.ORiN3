@@ -285,7 +285,7 @@
                           "Layout": {
                             "FieldName": "ApexRadialChart",
                             "FontFamily": "",
-                            "Color": "",
+                            "Color": "#ffffff",
                             "BackgroundColor": "",
                             "Name": "",
                             "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
@@ -396,7 +396,7 @@
                 "Layout": {
                   "FieldName": "ApexChart",
                   "FontFamily": "",
-                  "Color": "",
+                  "Color": "#ffffff",
                   "BackgroundColor": "",
                   "Name": "",
                   "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
@@ -417,7 +417,7 @@
                 "Layout": {
                   "FieldName": "ApexChart1",
                   "FontFamily": "",
-                  "Color": "",
+                  "Color": "#ffffff",
                   "BackgroundColor": "",
                   "Name": "",
                   "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
