@@ -1,0 +1,71 @@
+﻿@using Codeer.LowCode.Bindings.ORiN3.Designs
+@using Codeer.LowCode.Bindings.ORiN3.Fields
+@using Codeer.LowCode.Blazor.Components
+@inherits FieldComponentBase<MeterField>
+
+<svg width=@Width height=@Height viewBox=@($"0 0 {Width} {Height}")>
+
+  <path d=@Arc1Pram fill=@Color1 />
+
+  <!-- By drawing a small circle, it looks like a meter. -->
+  <path d=@Arc2Pram fill=@BackColor />
+
+  <!-- TODO font-->
+  <text x=@Radius y=@(Radius - 4) text-anchor="middle" font-size=@FontSize fill=@Color1>
+    @((int)(Field.Value * 100))
+  </text>
+</svg>
+
+@code {
+
+  //TODO Get the current width from the outer div
+  double Width { get; set; } = 480;
+
+  string Color1 => Field.Design.MeterColor;
+
+  string BackColor => "#ffffff";
+
+  double FontSize => (Width / 240) * 42;
+  double Radius => Width / 2;
+  double Height => Radius;
+
+  string Arc1Pram
+  {
+    get
+    {
+      var pos = GetPointOnCircle(Radius, Radius, Radius, Field.Value * 180);
+      var left = 0;
+      var bottom = Height;
+      return $"M{left} {bottom} A{Radius} {Radius} 0 0 1 {pos.X} {pos.Y} L{Radius} {Radius} Z";
+    }
+  }
+
+  string Arc2Pram
+  {
+    get
+    {
+      var innnerRadius = Radius * 0.75;
+      var left = Radius - innnerRadius;
+      var bottom = Radius;
+      var pos = GetPointOnCircle(Radius, Radius, innnerRadius, 180);
+      return $"M{left} {bottom} A{innnerRadius} {innnerRadius} 0 0 1 {pos.X} {pos.Y} L{Radius} {Radius} Z";
+    }
+  }
+
+  public class Point
+  {
+    public float X { get; set; }
+    public float Y { get; set; }
+  }
+
+  public static Point GetPointOnCircle(
+      double centerX, double centerY,
+      double radius,
+      double angleDeg)
+  {
+    var rad = (angleDeg + 180) * Math.PI / 180.0;
+    var x = centerX + radius * Math.Cos(rad);
+    var y = centerY + radius * Math.Sin(rad);
+    return new Point { X = (float)x, Y = (float)y };
+  }
+}

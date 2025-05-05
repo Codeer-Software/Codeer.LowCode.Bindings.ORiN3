@@ -104,6 +104,14 @@
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ButtonFieldDesign"
+    },
+    {
+      "PollingTime": 1000,
+      "MeterColor": "#ff4d4d",
+      "Name": "Meter",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Bindings.ORiN3.Designs.MeterFieldDesign"
     }
   ],
   "UserWriteCondition": {
@@ -358,6 +366,36 @@
                 "Border": "None"
               },
               {
+                "Padding": {},
+                "BackgroundColor": "",
+                "BorderStyle": {
+                  "LeftColor": "",
+                  "TopColor": "",
+                  "RightColor": "",
+                  "BottomColor": ""
+                },
+                "CanResize": false,
+                "Border": "None"
+              }
+            ]
+          },
+          {
+            "IsWrap": false,
+            "Margin": {},
+            "GridRowType": "Normal",
+            "CanResize": false,
+            "BackgroundColor": "",
+            "IsRowMarginRemoved": false,
+            "Columns": [
+              {
+                "Layout": {
+                  "FieldName": "Meter",
+                  "FontFamily": "",
+                  "Color": "",
+                  "BackgroundColor": "",
+                  "Name": "",
+                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                },
                 "Padding": {},
                 "BackgroundColor": "",
                 "BorderStyle": {
