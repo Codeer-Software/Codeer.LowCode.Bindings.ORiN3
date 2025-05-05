@@ -1,25 +1,31 @@
 ﻿@using Codeer.LowCode.Bindings.ORiN3.Designs
 @using Codeer.LowCode.Bindings.ORiN3.Fields
 @using Codeer.LowCode.Blazor.Components
+@using Codeer.LowCode.Blazor.Components.Interop
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
 @inherits FieldComponentBase<MeterField>
 
-<svg width=@Width height=@Height viewBox=@($"0 0 {Width} {Height}")>
+<div @ref="_element">
+  <svg width=@Width height=@Height viewBox=@($"0 0 {Width} {Height}")>
 
-  <path d=@Arc1Pram fill=@Color1 />
+    <path d=@Arc1Pram fill=@Color1 />
 
-  <!-- By drawing a small circle, it looks like a meter. -->
-  <path d=@Arc2Pram fill=@BackColor />
+    <!-- By drawing a small circle, it looks like a meter. -->
+    <path d=@Arc2Pram fill=@BackColor />
 
-  <!-- TODO font-->
-  <text x=@Radius y=@(Radius - 4) text-anchor="middle" font-size=@FontSize fill=@Color1>
-    @((int)(Field.Value * 100))
-  </text>
-</svg>
-
+    <!-- TODO font-->
+    <text x=@Radius y=@(Radius - 4) text-anchor="middle" font-size=@FontSize fill=@Color1>
+      @((int)(Field.Value * 100))
+    </text>
+  </svg>
+</div>
 @code {
 
-  //TODO Get the current width from the outer div
-  double Width { get; set; } = 480;
+  ElementReference _element;
+  BoundingRect? _boundingRect;
+
+  double Width { get; set; }
 
   string Color1 => Field.Design.MeterColor;
 
@@ -67,5 +73,25 @@
     var x = centerX + radius * Math.Cos(rad);
     var y = centerY + radius * Math.Sin(rad);
     return new Point { X = (float)x, Y = (float)y };
+  }
+
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync();
+    AddDisposable(_boundingRect = await BoundingRect.CreateAsync(JSRuntime));
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (_boundingRect != null)
+    {
+      var w = await _boundingRect.GetElementWidthAsync(_element);
+      if (w != Width)
+      { 
+        Width = w;
+        StateHasChanged();
+      }
+    }
+    await base.OnAfterRenderAsync(firstRender);
   }
 }

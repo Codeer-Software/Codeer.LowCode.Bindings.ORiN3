@@ -15,7 +15,8 @@
         "R1,R1Field",
         "D1,D1Field",
         "D2,D2Field",
-        "D1,D1ValueImage"
+        "D1,D1ValueImage",
+        "D1,Meter"
       ],
       "Name": "ORiN3Monitor",
       "ClassName": "",
@@ -106,7 +107,6 @@
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ButtonFieldDesign"
     },
     {
-      "PollingTime": 1000,
       "MeterColor": "#ff4d4d",
       "Name": "Meter",
       "ClassName": "",
@@ -381,6 +381,7 @@
           },
           {
             "IsWrap": false,
+            "Height": 224,
             "Margin": {},
             "GridRowType": "Normal",
             "CanResize": false,
@@ -396,6 +397,7 @@
                   "Name": "",
                   "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
                 },
+                "Width": 368,
                 "Padding": {},
                 "BackgroundColor": "",
                 "BorderStyle": {

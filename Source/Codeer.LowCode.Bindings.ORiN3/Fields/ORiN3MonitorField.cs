@@ -105,6 +105,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
             else if (field is NumberField numberField) await numberField.SetValueAsync(Convert.ToDecimal(value.GetValue()));
             else if (field is TextField textField) await textField.SetValueAsync(value.GetValue()?.ToString() ?? string.Empty);
             else if (field is ValueImageField image) image.SetValue(Convert.ToDecimal(value.GetValue()));
+            else if (field is MeterField meter) meter.SetValue(Convert.ToDouble(value.GetValue()));
         }
     }
 }
