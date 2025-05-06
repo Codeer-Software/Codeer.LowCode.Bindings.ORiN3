@@ -14,8 +14,10 @@ namespace ORiN3App.Server.Controllers
         private static readonly ORiN3IO orin3IO;
         static ORiN3Controller()
         {
-            orin3IO = new(SystemConfig.Instance.DesignFileDirectory);
-            orin3IO.CallBack = async _ => await Task.CompletedTask;//ORiN3FieldDesign, Values
+            orin3IO = new(SystemConfig.Instance.DesignFileDirectory)
+            {
+                CallBack = async _ => await Task.CompletedTask//ORiN3FieldDesign, Values
+            };
         }
 
         [HttpPost("values")]

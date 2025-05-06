@@ -15,9 +15,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
         public override FieldSubmitData GetSubmitData() => new();
         public override async Task SetDataAsync(FieldDataBase? fieldDataBase) => await Task.CompletedTask;
 
-        Dictionary<string, List<FieldBase>> _deviceAndFields = new();
+        readonly Dictionary<string, List<FieldBase>> _deviceAndFields = [];
 
-        internal bool IsPollingTarget => _deviceAndFields.Any();
+        internal bool IsPollingTarget => _deviceAndFields.Count != 0;
 
         public override async Task InitializeDataAsync(FieldDataBase? fieldDataBase)
         {
@@ -49,7 +49,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
                 var key = $"{monitorField.Design.SettingModule}.{monitorField.Design.ORiN3Field}.{sp[0]}";
                 if (!_deviceAndFields.TryGetValue(key, out var list))
                 {
-                    list = new();
+                    list = [];
                     _deviceAndFields[key] = list;
                 }
                 list.Add(field);
@@ -58,7 +58,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
 
         [ScriptName("UpdateAll")]
         public async Task UpdateAllAsync()
-            => await UpdateAsyncCore(_deviceAndFields.Keys.ToList());
+            => await UpdateAsyncCore([.. _deviceAndFields.Keys]);
 
         [ScriptName("Update")]
         public async Task UpdateAsync(params string[] devices)

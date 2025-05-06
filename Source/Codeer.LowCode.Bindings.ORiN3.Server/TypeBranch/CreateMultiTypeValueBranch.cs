@@ -4,16 +4,11 @@ using Design.ORiN3.Provider.V1;
 
 namespace Codeer.LowCode.Bindings.ORiN3.Server.TypeBranch
 {
-    internal class CreateMultiTypeValueBranch : IValueTypeBranchAsync
+    internal class CreateMultiTypeValueBranch(IVariable variable) : IValueTypeBranchAsync
     {
-        private readonly IVariable _variable;
+        private readonly IVariable _variable = variable;
 
         public MultiTypeValue Value { get; private set; } = MultiTypeValue.Create(null);
-
-        public CreateMultiTypeValueBranch(IVariable variable)
-        {
-            _variable = variable;
-        }
 
         public async Task CaseOfBoolAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<bool>)_variable).GetValueAsync(token).ConfigureAwait(false));
         public async Task CaseOfBoolArrayAsync(CancellationToken token) => Value = MultiTypeValue.Create(await ((IVariable<bool[]>)_variable).GetValueAsync(token).ConfigureAwait(false));

@@ -1,7 +1,7 @@
 {
   "DataInformation": {
-    "CreatedDateTime": "2025-04-21T08:39:16.4020244Z",
-    "Hash": "d8211f68cfa757b49600e3d6ed79a68c6dee5149dca09d8d0bb071f97e8af084",
+    "CreatedDateTime": "2025-05-06T14:32:34.9070800Z",
+    "Hash": "486b1fd872f2eadb765737a01565d20e1ec087f6872c3f70d6b27717f9f9b4b0",
     "Version": 1,
     "FileType": "ORiN3ObjectsDataElem",
     "ToolInformation": {
@@ -10,8 +10,8 @@
     }
   },
   "DiffKey": {
-    "Id": "bb196cd5-8713-4309-9f7b-b96ee1bd9dfa",
-    "ModificationDateTime": "2025-04-24T00:50:33.9875364Z"
+    "Id": "ec69c9f3-c42b-4206-9403-93925a87260b",
+    "ModificationDateTime": "2025-05-06T14:33:20.8972125Z"
   },
   "Id": "647c2c73-f48a-4740-acdb-46c78cf16624",
   "RemoteEngines": [
@@ -37,10 +37,10 @@
       "Version": "1.0.85",
       "Host": "127.0.0.1",
       "PortAutoAllocationEnabled": false,
-      "Port": 50000,
+      "Port": 51000,
       "IsThreadSafeMode": true,
-      "UseRemoteEngineTelemetrySetting": true,
-      "LogLevel": "Information",
+      "UseRemoteEngineTelemetrySetting": false,
+      "LogLevel": "Trace",
       "Protocol": 0,
       "SpecifyCertificate": false,
       "CertificateFile": "",
@@ -75,14 +75,14 @@
       "Tag": ""
     },
     {
-      "Id": "2cf1e516-6dea-47c3-be1e-3c2f30d18a3c",
+      "Id": "f2770a1c-7b34-4158-b8aa-ce77f73ea70b",
       "Name": "D1",
       "IsEnabled": true,
       "Comment": "",
       "ORiN3ObjectName": "D1",
-      "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Variable.PulseWaveInt32Variable, ORiN3.Provider.ORiNConsortium.Mock",
-      "Option": "{\u0022@Version\u0022:\u00221.0.85\u0022}",
-      "ValueType": 5,
+      "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Variable.PulseWaveDoubleVariable, ORiN3.Provider.ORiNConsortium.Mock",
+      "Option": "{\u0022@Version\u0022:\u00221.0.85\u0022,\u0022Value1\u0022:\u00220.2\u0022,\u0022Value2\u0022:\u00220.8\u0022}",
+      "ValueType": 10,
       "Tag": ""
     }
   ],
