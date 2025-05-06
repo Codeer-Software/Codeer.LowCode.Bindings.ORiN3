@@ -58,7 +58,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         private readonly AsyncLock _asyncLock = new();
         private ORiN3FieldDesign? _design;
         private IList<ORiN3Provider> _providers = [];
-        private Dictionary<string, MultiTypeValue> _variableBuffer = [];
+        private Dictionary<string, ORiN3IOResult> _variableBuffer = [];
         private bool _initialized = false;
         private Task? _updateBufferTask;
         private CancellationTokenSource? _updateBufferTaskCancellationTokenSource;
@@ -82,9 +82,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                         continue;
                     }
 
-                    if (_variableBuffer.TryGetValue(names.DeviceName, out MultiTypeValue? value))
+                    if (_variableBuffer.TryGetValue(names.DeviceName, out ORiN3IOResult? value))
                     {
-                        dic[fullPath] = new ORiN3IOResult { Value = value };
+                        dic[fullPath] = value;
                     }
                     else
                     {
@@ -148,7 +148,7 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
 
                 _variableBuffer = CreateVariableBuffer(o3Setting);
 
-                var remoteEngineId = o3TreeSetting.Objects[0].Id; // Remote Engineは1つしか設定できないので要素0決め打ち
+                var remoteEngineId = o3TreeSetting.Objects[0].Id; // / Since only one Remote Engine can be set, element 0 is fixed
                 var remoteEngineSetting = o3Setting.GetRemoteEngine(remoteEngineId);
                 foreach (var it in o3TreeSetting.Objects[0].Children)
                 {
@@ -236,7 +236,10 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
                                 var values = await provider.GetValuesAsync(token).ConfigureAwait(false);
                                 foreach (var value in values)
                                 {
-                                    _variableBuffer[value.Key] = CreateORiN3Value(value.Value);
+                                    var orin3IOResult = new ORiN3IOResult();
+                                    orin3IOResult.Value = value.Value.Succeeded ? CreateORiN3Value(value.Value.Value) : CreateORiN3Value(null);
+                                    orin3IOResult.Error = value.Value.Detail;
+                                    _variableBuffer[value.Key] = orin3IOResult;
                                 }
                             }
                             catch (TaskCanceledException)
@@ -264,12 +267,12 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
         static MultiTypeValue CreateORiN3Value(object? src)
             => src == null ? new NullValue() : (MultiTypeValue)Activator.CreateInstance(typeof(ORiN3Value<>).MakeGenericType(src.GetType()), src)!;
 
-        private static Dictionary<string, MultiTypeValue> CreateVariableBuffer(O3Setting o3Setting)
+        private static Dictionary<string, ORiN3IOResult> CreateVariableBuffer(O3Setting o3Setting)
         {
-            var variableBuffer = new Dictionary<string, MultiTypeValue>();
+            var variableBuffer = new Dictionary<string, ORiN3IOResult>();
             foreach (var variable in o3Setting.Variables)
             {
-                variableBuffer.Add(variable.Name, MultiTypeValue.Create(null));
+                variableBuffer.Add(variable.Name, new ORiN3IOResult() { Value = MultiTypeValue.Create(null), Error = string.Empty });
             }
             return variableBuffer;
         }

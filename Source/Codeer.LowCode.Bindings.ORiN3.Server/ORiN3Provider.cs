@@ -36,23 +36,16 @@ namespace Codeer.LowCode.Bindings.ORiN3.Server
             Dispose(disposing: false);
         }
 
-        internal async Task<IDictionary<string, object?>> GetValuesAsync(CancellationToken token)
+        internal async Task<IDictionary<string, IGetValuesResult>> GetValuesAsync(CancellationToken token)
         {
             Debug.Assert(!_disposedValue);
 
             var values = await _rootObject!.GetValuesAsync(_registeredIdAndNames!.Item1, token).ConfigureAwait(false);
             Debug.Assert(_registeredIdAndNames.Item3.Length == values.Length);
-            var result = new Dictionary<string, object?>();
+            var result = new Dictionary<string, IGetValuesResult>();
             for (var i = 0; i < values.Length; ++i)
             {
-                if (values[i].Succeeded)
-                {
-                    result.Add(_registeredIdAndNames.Item3[i], values[i].Value);
-                }
-                else
-                {
-                    result.Add(_registeredIdAndNames.Item3[i], null);
-                }
+                result.Add(_registeredIdAndNames.Item3[i], values[i]);
             }
             return result;
         }
