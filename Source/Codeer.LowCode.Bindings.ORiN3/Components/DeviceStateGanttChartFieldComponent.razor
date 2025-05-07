@@ -9,9 +9,9 @@
 
   <!-- ==== Left: machine label column (sticky) ==== -->
   <svg class="label-svg"
-       width="@LabelWidth"
-       height="@TotalHeight"
-       viewBox="0 0 @LabelWidth @TotalHeight">
+  width="@LabelWidth"
+  height="@TotalHeight"
+  viewBox="0 0 @LabelWidth @TotalHeight">
 
     @* Row labels & horizontal thin lines *@
     @for (int r = 0; r < Machines.Count; r++)
@@ -19,28 +19,30 @@
       var yTop = RowH + r * RowH;
 
       <g>
-        <text x="@(LabelWidth - 5)"
-              y="@(yTop + RowH / 2)"
-              class="label">@Machines[r].Name</text>
+        <text x="@(5)"
+        y="@(yTop + RowH / 2)"
+        class="label">@Machines[r].Name</text>
       </g>
 
       <line x1="0" x2="@LabelWidth"
-            y1="@yTop" y2="@yTop"
-            class="g-thin" />
+      y1="@yTop" y2="@yTop"
+      class="g-thin" />
     }
 
-    @* Top / bottom / right borders (thick) *@
-    <rect x="0" y="0"
-          width="@LabelWidth" height="@TotalHeight"
-          class="g-hour" fill="none" />
+    <line x1="0" x2="@LabelWidth"
+          y1="@TotalHeight" y2="@TotalHeight"
+          class="g-thin" />
+    <line x1="@LabelWidth" x2="@LabelWidth"
+          y1="0" y2="@TotalHeight"
+          class="g-thin" />
   </svg>
 
   <!-- ==== Right: timeline area ==== -->
   <div class="tl-scroll">
     <svg class="tl-svg"
-         width="@TimelineWidth"
-         height="@TotalHeight"
-         viewBox="0 0 @TimelineWidth @TotalHeight">
+    width="@TimelineWidth"
+    height="@TotalHeight"
+    viewBox="0 0 @TimelineWidth @TotalHeight">
 
       @* --- Time header --- *@
       @for (int h = StartHour; h <= EndHour; h++)
@@ -49,10 +51,10 @@
 
         <g>
           <text x="@cx"
-                y="@(RowH / 2)"
-                text-anchor="middle"
-                dominant-baseline="middle"
-                class="time">@h</text>
+          y="@(RowH / 2)"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          class="time">@h</text>
         </g>
       }
 
@@ -61,25 +63,16 @@
       {
         var yTop = RowH + idx * RowH;
 
+        int i = 0;
         foreach (var seg in machine.Segments)
         {
-          var x = ToCol(seg.Start) * CellW;
-          var w = (ToCol(seg.End) - ToCol(seg.Start)) * CellW;
-
+          var x = i * CellW;
           <rect x="@x" y="@yTop"
-                width="@w" height="@RowH"
-                class="@seg.StatusCss" />
+                width="@CellW" height="@RowH"
+                fill="@seg.Color" />
+          i++;
         }
 
-        var fCol = ToCol(Now);
-        if (fCol < Cols)
-        {
-          <rect x="@(fCol * CellW)"
-                y="@yTop"
-                width="@((Cols - fCol) * CellW)"
-                height="@RowH"
-                class="future" />
-        }
       }
 
       @* --- Thin grid (vertical / horizontal) --- *@
@@ -104,13 +97,8 @@
       @for (int h = 0; h <= EndHour - StartHour; h++)
       {
         var x = h * ColPerHour * CellW;
-        <line x1="@x" y1="0" x2="@x" y2="@TotalHeight" class="g-hour" />
+        <line x1="@x" y1="0" x2="@x" y2="@RowH" class="g-thin" />
       }
-
-      @* --- Outer border (top / bottom / right) --- *@
-      <line x1="0" y1="0" x2="@TimelineWidth" y2="0" class="g-hour" />
-      <line x1="0" y1="@TotalHeight" x2="@TimelineWidth" y2="@TotalHeight" class="g-hour" />
-      <line x1="@TimelineWidth" y1="0" x2="@TimelineWidth" y2="@TotalHeight" class="g-hour" />
     </svg>
   </div>
 </div>
@@ -118,8 +106,10 @@
 <style>
   /* ===== Layout ===== */
   .gantt-wrap {
-    display: flex;
-    border: 1.5px solid #8c8c8c; /* outer border */
+    display: inline-flex;
+    border: 1.5px solid #8c8c8c; /* restored outer border */
+    width: fit-content; /* shrink to chart width */
+    max-width: 100%; /* but never exceed viewport */
   }
 
   .label-svg {
@@ -161,13 +151,8 @@
     stroke-width: 0.5;
   }
 
-  .g-hour {
-    stroke: #8c8c8c;
-    stroke-width: 1.5;
-  }
-
   .label {
-    text-anchor: end;
+    text-anchor: start;
     dominant-baseline: middle;
     font-size: 12px;
   }
@@ -182,12 +167,9 @@
 
 @code {
   /* ===== Parameters ===== */
-  [Parameter] public int StartHour { get; set; } = 9;
-  [Parameter] public int EndHour { get; set; } = 18;
-  [Parameter] public int StepMin { get; set; } = 10;
-  [Parameter] public TimeSpan Now { get; set; } = DateTime.Now.TimeOfDay;
-
-  [Parameter] public IReadOnlyList<MachineRow> Machines { get; set; } = SampleData();
+  int StartHour => Field.Design.StartHour;
+  int EndHour => Field.Design.EndHour;
+  int StepMin => Field.Design.StepMin;
 
   /* ===== Layout constants ===== */
   static readonly int CellW = 24;   // column width
@@ -198,40 +180,5 @@
   int Cols => (EndHour - StartHour) * ColPerHour;
   int TimelineWidth => Cols * CellW;
   int TotalHeight => RowH * (Machines.Count + 1);
-
-  /* ===== Helper ===== */
-  int ToCol(TimeSpan t)
-      => (int)((t - TimeSpan.FromHours(StartHour)).TotalMinutes / StepMin);
-
-  /* ===== Data model ===== */
-  public record Segment(TimeSpan Start, TimeSpan End, string StatusCss);
-  public record MachineRow(string Name, List<Segment> Segments);
-
-  /* ===== Sample data ===== */
-  static List<MachineRow> SampleData()
-  {
-    TimeSpan T(string s) => TimeSpan.ParseExact(s, @"hh\:mm", null);
-
-    return new()
-        {
-            new("Machine1", new()
-            {
-                new(T("09:00"), T("12:30"), "normal"),
-                new(T("12:30"), T("12:40"), "warning"),
-                new(T("12:40"), T("14:30"), "normal"),
-                new(T("14:30"), T("15:00"), "alert"),
-                new(T("15:00"), T("16:30"), "normal"),
-            }),
-            new("Machine2", new()
-            {
-                new(T("09:00"), T("11:00"), "normal"),
-                new(T("11:00"), T("12:00"), "alert"),
-                new(T("12:00"), T("12:30"), "warning"),
-                new(T("12:30"), T("16:30"), "normal"),
-            }),
-            new("Machine3", new()),
-            new("Machine4", new()),
-            new("Machine5", new()),
-        };
-  }
+  IReadOnlyList<MachineRow> Machines => Field.Machines;
 }

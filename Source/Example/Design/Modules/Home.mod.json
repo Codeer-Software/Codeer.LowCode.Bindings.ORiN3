@@ -124,6 +124,26 @@
       "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.LabelFieldDesign"
     },
     {
+      "StartHour": 9,
+      "EndHour": 18,
+      "StepMin": 10,
+      "ModuleName": "",
+      "TimeField": "",
+      "DeviceField": "",
+      "StateField": "",
+      "DeviceAndMachinery": [
+        "E0,A",
+        "E1,B",
+        "E2,C",
+        "E3,D",
+        "E4,E",
+        "E5,F"
+      ],
+      "StateAndTextAndColor": [
+        "0,通常,#b6e7be",
+        "1,警告,#ffe84f",
+        "2,エラー,#ff3b2f"
+      ],
       "Name": "DeviceStateGanttChart",
       "ClassName": "",
       "ContextMenu": "",
@@ -437,62 +457,13 @@
             "Columns": [
               {
                 "Layout": {
-                  "Name": "",
-                  "Padding": {},
-                  "IsBordered": false,
-                  "IsFlowLayout": false,
-                  "IsFillAvailable": false,
-                  "IsExpandable": false,
-                  "ExpanderLabel": "",
-                  "IsExpanderDefaultOpened": false,
-                  "ScrollDirection": "Unset",
+                  "FieldName": "DeviceStateGanttChart",
+                  "FontFamily": "",
+                  "Color": "",
                   "BackgroundColor": "",
-                  "Rows": [
-                    {
-                      "IsWrap": false,
-                      "Margin": {},
-                      "GridRowType": "Normal",
-                      "CanResize": false,
-                      "BackgroundColor": "",
-                      "IsRowMarginRemoved": false,
-                      "Columns": [
-                        {
-                          "Layout": {
-                            "FieldName": "DeviceStateGanttChart",
-                            "FontFamily": "",
-                            "Color": "",
-                            "BackgroundColor": "",
-                            "Name": "",
-                            "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
-                          },
-                          "Padding": {},
-                          "BackgroundColor": "",
-                          "BorderStyle": {
-                            "LeftColor": "",
-                            "TopColor": "",
-                            "RightColor": "",
-                            "BottomColor": ""
-                          },
-                          "CanResize": false,
-                          "Border": "None"
-                        }
-                      ]
-                    }
-                  ],
-                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.GridLayoutDesign"
+                  "Name": "",
+                  "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
                 },
-                "Padding": {},
-                "BackgroundColor": "",
-                "BorderStyle": {
-                  "LeftColor": "",
-                  "TopColor": "",
-                  "RightColor": "",
-                  "BottomColor": ""
-                },
-                "CanResize": false,
-                "Border": "None"
-              },
-              {
                 "Padding": {},
                 "BackgroundColor": "",
                 "BorderStyle": {
