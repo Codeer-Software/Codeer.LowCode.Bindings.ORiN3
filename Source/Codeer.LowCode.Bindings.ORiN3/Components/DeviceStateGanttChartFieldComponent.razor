@@ -8,10 +8,7 @@
 <div class="gantt-wrap" style="@DivStyle">
 
   <!-- ==== Left: machine label column (sticky) ==== -->
-  <svg class="label-svg"
-  width="@LabelWidth"
-  height="@TotalHeight"
-  viewBox="0 0 @LabelWidth @TotalHeight">
+  <svg class="label-svg" width="@LabelWidth" height="@TotalHeight" viewBox="0 0 @LabelWidth @TotalHeight">
 
     @* Row labels & horizontal thin lines *@
     @for (int r = 0; r < Machines.Count; r++)
@@ -19,26 +16,14 @@
       var yTop = RowH + r * RowH;
 
       <g>
-        <text x="@(5)"
-        y="@(yTop + RowH / 2)"
-        class="label"
-        fill="@Color">@Machines[r].Name</text>
+        <text x="@(5)" y="@(yTop + RowH / 2)" class="label" fill="@Color">@Machines[r].Name</text>
       </g>
 
-      <line x1="0" x2="@LabelWidth"
-      y1="@yTop" y2="@yTop"
-      class="g-thin"
-            stroke="@Color" />
+      <line x1="0" x2="@LabelWidth" y1="@yTop" y2="@yTop" class="g-thin" stroke="@Color" />
     }
 
-    <line x1="0" x2="@LabelWidth"
-    y1="@TotalHeight" y2="@TotalHeight"
-    class="g-thin"
-          stroke="@Color" />
-    <line x1="@LabelWidth" x2="@LabelWidth"
-    y1="0" y2="@TotalHeight"
-    class="g-thin"
-          stroke="@Color" />
+    <line x1="0" x2="@LabelWidth" y1="@TotalHeight" y2="@TotalHeight" class="g-thin" stroke="@Color" />
+    <line x1="@LabelWidth" x2="@LabelWidth" y1="0" y2="@TotalHeight" class="g-thin" stroke="@Color" />
   </svg>
 
   <!-- ==== Right: timeline area ==== -->
@@ -52,15 +37,9 @@
       @for (int h = StartHour; h <= EndHour; h++)
       {
         var cx = ((h - StartHour) * 60 / StepMin + ColPerHour / 2f) * CellW;
-
+        var cy = RowH / 2;
         <g>
-          <text x="@cx"
-          y="@(RowH / 2)"
-          text-anchor="middle"
-          dominant-baseline="middle"
-          class="time"
-          fill="@Color"
-          >@h</text>
+          <text x="@cx" y="@cy" text-anchor="middle" dominant-baseline="middle" class="time" fill="@Color">@h</text>
         </g>
       }
 
@@ -73,12 +52,9 @@
         foreach (var seg in machine.Segments)
         {
           var x = i * CellW;
-          <rect x="@x" y="@yTop"
-          width="@CellW" height="@RowH"
-          fill="@seg.Color" />
+          <rect x="@x" y="@yTop" width="@CellW" height="@RowH" fill="@seg.Color" />
           i++;
         }
-
       }
 
       @* --- Thin grid (vertical / horizontal) --- *@
@@ -93,12 +69,7 @@
       @for (int r = 1; r <= Machines.Count + 1; r++)
       {
         var y = r * RowH;
-        <line x1="0"
-        y1="@y"
-        x2="@TimelineWidth"
-        y2="@y"
-        class="g-thin"
-              stroke="@Color" />
+        <line x1="0" y1="@y" x2="@TimelineWidth" y2="@y" class="g-thin" stroke="@Color" />
       }
 
       @* --- Thick grid (hour) --- *@
@@ -111,69 +82,17 @@
   </div>
 </div>
 
-<style>
-  /* ===== Layout ===== */
-  .gantt-wrap {
-  display: inline-flex;
-  width: fit-content; /* shrink to chart width */
-  max-width: 100%; /* but never exceed viewport */
-  }
-
-  .label-svg {
-  position: sticky;
-  left: 0;
-  z-index: 1; /* above timeline */
-  flex: none;
-  }
-
-  .tl-scroll {
-  overflow-x: auto; /* horizontal scroll */
-  overflow-y: hidden;
-  }
-
-  .tl-svg {
-  display: block;
-  }
-
-  /* ===== Colors & lines ===== */
-  .g-thin {
-  stroke-width: 0.5;
-  }
-
-  .label {
-  text-anchor: start;
-  dominant-baseline: middle;
-  font-size: 12px;
-  }
-
-  .time {
-  text-anchor: middle;
-  dominant-baseline: middle;
-  font-size: 12px;
-  font-weight: bold;
-  }
-</style>
-
 @code {
-  string DivStyle => $"border:1.5px solid {Color}";
-  string Color
-  {
-    get
-    {
-      var x = Field.Color.Or(Field.GetFontAppearance()?.Color).Or("#000000")!;
-      return x;
-    }
-  }
-
-  /* ===== Parameters ===== */
-  int StartHour => Field.Design.StartHour;
-  int EndHour => Field.Design.EndHour;
-  int StepMin => Field.Design.StepMin;
-
-  /* ===== Layout constants ===== */
   static readonly int CellW = 24;   // column width
   static readonly int RowH = 26;   // row height
   static readonly int LabelWidth = 70;   // label column width
+
+  string DivStyle => $"border:1.5px solid {Color}";
+  string Color => Field.Color.Or(Field.GetFontAppearance()?.Color).Or("#000000")!;
+
+  int StartHour => Field.Design.StartHour;
+  int EndHour => Field.Design.EndHour;
+  int StepMin => Field.Design.StepMin;
 
   int ColPerHour => 60 / StepMin;
   int Cols => (EndHour - StartHour) * ColPerHour;

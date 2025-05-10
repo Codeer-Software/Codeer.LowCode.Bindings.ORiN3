@@ -1,0 +1,40 @@
+/* ===== Layout ===== */
+  .gantt-wrap {
+  display: inline-flex;
+  width: fit-content; /* shrink to chart width */
+  max-width: 100%; /* but never exceed viewport */
+  }
+
+  .label-svg {
+  position: sticky;
+  left: 0;
+  z-index: 1; /* above timeline */
+  flex: none;
+  }
+
+  .tl-scroll {
+  overflow-x: auto; /* horizontal scroll */
+  overflow-y: hidden;
+  }
+
+  .tl-svg {
+  display: block;
+  }
+
+  /* ===== Colors & lines ===== */
+  .g-thin {
+  stroke-width: 0.5;
+  }
+
+  .label {
+  text-anchor: start;
+  dominant-baseline: middle;
+  font-size: 12px;
+  }
+
+  .time {
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-size: 12px;
+  font-weight: bold;
+  }
