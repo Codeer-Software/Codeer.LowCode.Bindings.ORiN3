@@ -11,6 +11,7 @@ using Codeer.LowCode.Blazor.Utils;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using ORiN3App.Client.Shared.ScriptObjects;
+using static System.Net.WebRequestMethods;
 
 namespace ORiN3App.Client.Shared.Services
 {
@@ -120,5 +121,8 @@ namespace ORiN3App.Client.Shared.Services
 
         public async Task<Dictionary<string, ORiN3IOResult>> GetValues(List<string> devices)
             => await _http.PostAsJsonAsync<List<string>, Dictionary<string, ORiN3IOResult>>($"/api/orin3/values", devices, false) ?? new();
+
+        public async Task<List<MachineRow>> GetDeviceStateGanttChartFieldDataAsync(DeviceStateGanttChartFieldRequest reqest)
+            => await _http.PostAsJsonAsync<DeviceStateGanttChartFieldRequest, List<MachineRow>>($"/api/orin3/device_state_gantt_chart", reqest, false) ?? new ();
     }
 }

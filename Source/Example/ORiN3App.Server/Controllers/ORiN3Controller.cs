@@ -20,6 +20,11 @@ namespace ORiN3App.Server.Controllers
             };
         }
 
+        readonly DataService _dataService;
+
+        public ORiN3Controller(DataService dataService)
+            => _dataService = dataService;
+
         [HttpPost("values")]
         public async Task<Dictionary<string, ORiN3IOResult>> GetValuesAsync(List<string> devices)
         {
@@ -33,5 +38,9 @@ namespace ORiN3App.Server.Controllers
             }
             return await orin3IO.GetValuesAsync(orin3Dic, devices);
         }
+
+        [HttpPost("device_state_gantt_chart")]
+        public async Task<List<MachineRow>> GetDeviceStateGanttAsync(DeviceStateGanttChartFieldRequest reqest)
+            => await DeviceStateGanttChartFieldServer.CreateData(_dataService.ModuleDataIO, DesignerService.GetDesignData().Modules, reqest);
     }
 }
