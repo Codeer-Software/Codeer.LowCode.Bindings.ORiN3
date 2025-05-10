@@ -12,7 +12,6 @@ namespace Codeer.LowCode.Bindings.ORiN3.Designs
         [Designer]
         public ObjectFit ObjectFit { get; set; } = ObjectFit.Contain;
 
-        // TODO : Change the type
         [Designer(CandidateType = CandidateType.StringList)]
         public List<string> Items { get; set; } = [];
 

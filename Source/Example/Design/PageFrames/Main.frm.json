@@ -22,9 +22,11 @@
         "ListPageDesign": {
           "SearchLayoutName": "",
           "PageTitle": "",
+          "HeaderTitle": "",
           "CanBulkDataUpdate": false,
           "CanBulkDataDownload": false,
           "UseSubmitButton": false,
+          "UseNavigateToCreate": true,
           "ListFieldDesign": {
             "LayoutName": "",
             "CanNavigateToDetail": true,
@@ -42,7 +44,58 @@
             "DeleteTogether": false,
             "CanCreate": false,
             "CanUpdate": false,
-            "CanDelete": false,
+            "CanDelete": true,
+            "CanUserSort": true,
+            "CanSelect": false,
+            "OnDataChanged": "",
+            "OnSearchDataChanged": "",
+            "OnSelectedIndexChanged": "",
+            "OnSelectedIndexChanging": "",
+            "Name": "",
+            "ClassName": "",
+            "ContextMenu": "",
+            "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.ListFieldDesign"
+          }
+        },
+        "DetailPageDesign": {
+          "PageTitle": "",
+          "LayoutName": ""
+        }
+      },
+      {
+        "Title": "DeviceHistory",
+        "Icon": "",
+        "ModulePageType": "Auto",
+        "PageFrame": "",
+        "Module": "DeviceHistory",
+        "Id": "",
+        "Parameters": "",
+        "ListPageDesign": {
+          "SearchLayoutName": "",
+          "PageTitle": "",
+          "HeaderTitle": "",
+          "CanBulkDataUpdate": true,
+          "CanBulkDataDownload": true,
+          "UseSubmitButton": false,
+          "UseNavigateToCreate": true,
+          "ListFieldDesign": {
+            "LayoutName": "",
+            "CanNavigateToDetail": true,
+            "IsStriped": false,
+            "DisplayName": "",
+            "SearchCondition": {
+              "LimitCount": 50,
+              "SortFieldVariable": "DateTime.Value",
+              "SortDescending": false,
+              "SelectFields": [],
+              "ModuleName": "DeviceHistory"
+            },
+            "PagerPosition": "Bottom",
+            "UseIndexSort": false,
+            "DeleteTogether": false,
+            "CanCreate": false,
+            "CanUpdate": false,
+            "CanDelete": true,
             "CanUserSort": true,
             "CanSelect": false,
             "OnDataChanged": "",
@@ -124,9 +177,11 @@
     "ListPageDesign": {
       "SearchLayoutName": "",
       "PageTitle": "",
+      "HeaderTitle": "",
       "CanBulkDataUpdate": false,
       "CanBulkDataDownload": false,
       "UseSubmitButton": false,
+      "UseNavigateToCreate": true,
       "ListFieldDesign": {
         "LayoutName": "",
         "CanNavigateToDetail": false,
@@ -144,7 +199,7 @@
         "DeleteTogether": false,
         "CanCreate": false,
         "CanUpdate": false,
-        "CanDelete": false,
+        "CanDelete": true,
         "CanUserSort": true,
         "CanSelect": false,
         "OnDataChanged": "",

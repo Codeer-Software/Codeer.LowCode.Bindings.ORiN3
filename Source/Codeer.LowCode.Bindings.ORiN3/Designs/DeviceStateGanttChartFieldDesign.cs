@@ -28,11 +28,9 @@ namespace Codeer.LowCode.Bindings.ORiN3.Designs
         [Designer(CandidateType = CandidateType.Field), ModuleMember(Member = $"{nameof(ModuleName)}")]
         public string StateField { get; set; } = string.Empty;
 
-        // TODO : Change the typef
         [Designer(CandidateType = CandidateType.StringList)]
         public List<string> DeviceAndMachinery { get; set; } = [];
 
-        // TODO : Change the typef
         [Designer(CandidateType = CandidateType.StringList)]
         public List<string> StateAndTextAndColor { get; set; } = [];
 

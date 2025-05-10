@@ -20,7 +20,6 @@ namespace Codeer.LowCode.Bindings.ORiN3.Designs
         [Designer(CandidateType = CandidateType.Field), ModuleMember(Member = nameof(SettingModule)), TargetFieldType(Types = [typeof(ORiN3FieldDesign)])]
         public string ORiN3Field { get; set; } = string.Empty;
 
-        // TODO : Change the typef
         [Designer(CandidateType = CandidateType.StringList)]
         public List<string> Items { get; set; } = [];
 

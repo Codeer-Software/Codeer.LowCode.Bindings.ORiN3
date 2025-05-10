@@ -58,9 +58,11 @@
         "ListPageDesign": {
           "SearchLayoutName": "",
           "PageTitle": "",
+          "HeaderTitle": "",
           "CanBulkDataUpdate": true,
           "CanBulkDataDownload": true,
           "UseSubmitButton": false,
+          "UseNavigateToCreate": true,
           "ListFieldDesign": {
             "LayoutName": "",
             "CanNavigateToDetail": true,
@@ -84,7 +86,7 @@
             "DeleteTogether": false,
             "CanCreate": false,
             "CanUpdate": false,
-            "CanDelete": false,
+            "CanDelete": true,
             "CanUserSort": true,
             "CanSelect": false,
             "OnDataChanged": "",
@@ -113,9 +115,11 @@
         "ListPageDesign": {
           "SearchLayoutName": "",
           "PageTitle": "",
+          "HeaderTitle": "",
           "CanBulkDataUpdate": true,
           "CanBulkDataDownload": true,
           "UseSubmitButton": false,
+          "UseNavigateToCreate": true,
           "ListFieldDesign": {
             "LayoutName": "",
             "CanNavigateToDetail": true,
@@ -139,7 +143,7 @@
             "DeleteTogether": false,
             "CanCreate": false,
             "CanUpdate": false,
-            "CanDelete": false,
+            "CanDelete": true,
             "CanUserSort": true,
             "CanSelect": false,
             "OnDataChanged": "",
@@ -183,9 +187,11 @@
     "ListPageDesign": {
       "SearchLayoutName": "",
       "PageTitle": "",
+      "HeaderTitle": "",
       "CanBulkDataUpdate": false,
       "CanBulkDataDownload": false,
       "UseSubmitButton": false,
+      "UseNavigateToCreate": true,
       "ListFieldDesign": {
         "LayoutName": "",
         "CanNavigateToDetail": true,
@@ -203,7 +209,7 @@
         "DeleteTogether": false,
         "CanCreate": false,
         "CanUpdate": false,
-        "CanDelete": false,
+        "CanDelete": true,
         "CanUserSort": true,
         "CanSelect": false,
         "OnDataChanged": "",

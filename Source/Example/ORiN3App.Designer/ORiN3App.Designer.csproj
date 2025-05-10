@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
     <PackageReference Include="Codeer.LowCode.Bindings.Blazor-ApexCharts.Designer" Version="0.16.0" />
-    <PackageReference Include="Codeer.LowCode.Blazor.Designer" Version="1.2.2" />
+    <PackageReference Include="Codeer.LowCode.Blazor.Designer" Version="1.2.3" />
     <ProjectReference Include="..\ORiN3App.Client.Shared\ORiN3App.Client.Shared.csproj" />
     <ProjectReference Include="..\ORiN3App.Server.Shared\ORiN3App.Server.Shared.csproj" />
   </ItemGroup>
