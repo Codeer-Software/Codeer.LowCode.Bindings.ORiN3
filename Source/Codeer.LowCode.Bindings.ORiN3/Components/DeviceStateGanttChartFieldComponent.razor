@@ -5,7 +5,7 @@
 @using Microsoft.JSInterop
 @inherits FieldComponentBase<DeviceStateGanttChartField>
 
-<div class="gantt-wrap">
+<div class="gantt-wrap" style="@DivStyle">
 
   <!-- ==== Left: machine label column (sticky) ==== -->
   <svg class="label-svg"
@@ -21,20 +21,24 @@
       <g>
         <text x="@(5)"
         y="@(yTop + RowH / 2)"
-        class="label">@Machines[r].Name</text>
+        class="label"
+        fill="@Color">@Machines[r].Name</text>
       </g>
 
       <line x1="0" x2="@LabelWidth"
       y1="@yTop" y2="@yTop"
-      class="g-thin" />
+      class="g-thin"
+            stroke="@Color" />
     }
 
     <line x1="0" x2="@LabelWidth"
-          y1="@TotalHeight" y2="@TotalHeight"
-          class="g-thin" />
+    y1="@TotalHeight" y2="@TotalHeight"
+    class="g-thin"
+          stroke="@Color" />
     <line x1="@LabelWidth" x2="@LabelWidth"
-          y1="0" y2="@TotalHeight"
-          class="g-thin" />
+    y1="0" y2="@TotalHeight"
+    class="g-thin"
+          stroke="@Color" />
   </svg>
 
   <!-- ==== Right: timeline area ==== -->
@@ -54,7 +58,9 @@
           y="@(RowH / 2)"
           text-anchor="middle"
           dominant-baseline="middle"
-          class="time">@h</text>
+          class="time"
+          fill="@Color"
+          >@h</text>
         </g>
       }
 
@@ -68,8 +74,8 @@
         {
           var x = i * CellW;
           <rect x="@x" y="@yTop"
-                width="@CellW" height="@RowH"
-                fill="@seg.Color" />
+          width="@CellW" height="@RowH"
+          fill="@seg.Color" />
           i++;
         }
 
@@ -80,24 +86,26 @@
       {
         var x = c * CellW;
         <line x1="@x" y1="@RowH"
-              x2="@x" y2="@TotalHeight"
-              class="g-thin" />
+        x2="@x" y2="@TotalHeight"
+        class="g-thin"
+              stroke="@Color" />
       }
       @for (int r = 1; r <= Machines.Count + 1; r++)
       {
         var y = r * RowH;
         <line x1="0"
-              y1="@y"
-              x2="@TimelineWidth"
-              y2="@y"
-              class="g-thin" />
+        y1="@y"
+        x2="@TimelineWidth"
+        y2="@y"
+        class="g-thin"
+              stroke="@Color" />
       }
 
       @* --- Thick grid (hour) --- *@
       @for (int h = 0; h <= EndHour - StartHour; h++)
       {
         var x = h * ColPerHour * CellW;
-        <line x1="@x" y1="0" x2="@x" y2="@RowH" class="g-thin" />
+        <line x1="@x" y1="0" x2="@x" y2="@RowH" class="g-thin" stroke="@Color" />
       }
     </svg>
   </div>
@@ -106,66 +114,57 @@
 <style>
   /* ===== Layout ===== */
   .gantt-wrap {
-    display: inline-flex;
-    border: 1.5px solid #8c8c8c; /* restored outer border */
-    width: fit-content; /* shrink to chart width */
-    max-width: 100%; /* but never exceed viewport */
+  display: inline-flex;
+  width: fit-content; /* shrink to chart width */
+  max-width: 100%; /* but never exceed viewport */
   }
 
   .label-svg {
-    position: sticky;
-    left: 0;
-    background: #ffffff;
-    z-index: 1; /* above timeline */
-    flex: none;
+  position: sticky;
+  left: 0;
+  z-index: 1; /* above timeline */
+  flex: none;
   }
 
   .tl-scroll {
-    overflow-x: auto; /* horizontal scroll */
-    overflow-y: hidden;
+  overflow-x: auto; /* horizontal scroll */
+  overflow-y: hidden;
   }
 
   .tl-svg {
-    display: block;
+  display: block;
   }
 
   /* ===== Colors & lines ===== */
-  .normal {
-    fill: #b6e7be;
-  }
-
-  .warning {
-    fill: #ffe84f;
-  }
-
-  .alert {
-    fill: #ff3b2f;
-  }
-
-  .future {
-    fill: #ffffff;
-  }
-
   .g-thin {
-    stroke: #8c8c8c;
-    stroke-width: 0.5;
+  stroke-width: 0.5;
   }
 
   .label {
-    text-anchor: start;
-    dominant-baseline: middle;
-    font-size: 12px;
+  text-anchor: start;
+  dominant-baseline: middle;
+  font-size: 12px;
   }
 
   .time {
-    text-anchor: middle;
-    dominant-baseline: middle;
-    font-size: 12px;
-    font-weight: bold;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-size: 12px;
+  font-weight: bold;
   }
 </style>
 
 @code {
+  string DivStyle => $"border:1.5px solid {Color}";
+  string Color
+  {
+    get
+    {
+      var x = Field.Color.Or(Field.GetFontAppearance()?.Color).Or("#000000")!;
+      return x;
+    }
+  }
+
   /* ===== Parameters ===== */
   int StartHour => Field.Design.StartHour;
   int EndHour => Field.Design.EndHour;

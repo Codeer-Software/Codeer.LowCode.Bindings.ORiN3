@@ -43,6 +43,8 @@ namespace Codeer.LowCode.Bindings.ORiN3.Fields
 
         public override async Task InitializeDataAsync(FieldDataBase? fieldDataBase)
         {
+            if (Services.AppInfoService.IsDesignMode) return;
+
             var io = (IORiN3IO)Services.AppInfoService;
             Machines = await io.GetDeviceStateGanttChartFieldDataAsync(
                 new() 
