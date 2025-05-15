@@ -10,9 +10,9 @@
   <svg width=@Width height=@Height viewBox=@($"0 0 {Width} {Height}")>
 
     <path d=@Arc1Pram fill=@Color />
-
-    <!-- By drawing a small circle, it looks like a meter. -->
     <path d=@Arc2Pram fill=@BackColor />
+    <path d=@Arc3Pram fill=@Color />
+    <path d=@Arc4Pram fill=@BackColor />
 
     <!-- TODO font-->
     <text x=@Radius y=@(Radius - 4) text-anchor="middle" font-size=@FontSize fill=@Color>
@@ -35,28 +35,22 @@
   double Radius => Width / 2;
   double Height => Radius;
 
-  string Arc1Pram
+  string Arc1Pram => CresateArcParam(Radius, 1);
+
+  string Arc2Pram => CresateArcParam(Radius * 0.96, 1);
+
+  string Arc3Pram => CresateArcParam(Radius * 0.94, Field.Value);
+
+  string Arc4Pram => CresateArcParam(Radius * 0.5, 1);
+
+  string CresateArcParam(double currentRadius, double percent)
   {
-    get
-    {
-      var pos = GetPointOnCircle(Radius, Radius, Radius, Field.Value * 180);
-      var left = 0;
-      var bottom = Height;
-      return $"M{left} {bottom} A{Radius} {Radius} 0 0 1 {pos.X} {pos.Y} L{Radius} {Radius} Z";
-    }
+    var left = Radius - currentRadius;
+    var bottom = Radius;
+    var pos = GetPointOnCircle(Radius, Radius, currentRadius, 180 * percent);
+    return $"M{left} {bottom} A{currentRadius} {currentRadius} 0 0 1 {pos.X} {pos.Y} L{Radius} {Radius} Z";
   }
 
-  string Arc2Pram
-  {
-    get
-    {
-      var innnerRadius = Radius * 0.75;
-      var left = Radius - innnerRadius;
-      var bottom = Radius;
-      var pos = GetPointOnCircle(Radius, Radius, innnerRadius, 180);
-      return $"M{left} {bottom} A{innnerRadius} {innnerRadius} 0 0 1 {pos.X} {pos.Y} L{Radius} {Radius} Z";
-    }
-  }
 
   public class Point
   {
@@ -87,7 +81,7 @@
     {
       var w = await _boundingRect.GetElementWidthAsync(_element);
       if (w != Width)
-      { 
+      {
         Width = w;
         StateHasChanged();
       }
