@@ -1,22 +1,22 @@
 {
   "DataInformation": {
-    "CreatedDateTime": "2025-05-06T14:32:34.9070800Z",
-    "Hash": "486b1fd872f2eadb765737a01565d20e1ec087f6872c3f70d6b27717f9f9b4b0",
+    "CreatedDateTime": "2025-05-15T02:17:21.9282930Z",
+    "Hash": "71113c145de977767616288caa5ecc506a873724788e8d6b3a089a7151f07663",
     "Version": 1,
     "FileType": "ORiN3ObjectsDataElem",
     "ToolInformation": {
       "Name": "ORiN3 Configurator",
-      "Version": "1.0.445"
+      "Version": "1.1.7"
     }
   },
   "DiffKey": {
-    "Id": "ec69c9f3-c42b-4206-9403-93925a87260b",
-    "ModificationDateTime": "2025-05-06T14:33:20.8972125Z"
+    "Id": "84db8b93-f75f-4569-9796-63a10ca588a3",
+    "ModificationDateTime": "2025-05-15T04:24:41.0629465Z"
   },
-  "Id": "647c2c73-f48a-4740-acdb-46c78cf16624",
+  "Id": "8aa38540-4b26-47b6-bd8d-69efb6d0e0b5",
   "RemoteEngines": [
     {
-      "Id": "ea9cd528-7119-451e-8aa7-474ee3571ba5",
+      "Id": "89a9e610-0801-4471-b42c-d05b53fb380a",
       "Name": "RuntimeHost",
       "Comment": "",
       "Host": "127.0.0.1",
@@ -28,7 +28,7 @@
   ],
   "RootObjects": [
     {
-      "Id": "bb5b6f07-1609-4add-b46f-59b865c8f27f",
+      "Id": "dc17d9d0-d36d-436f-9743-7e3122a04dac",
       "Name": "ORiNConsortiumMockProvider",
       "IsEnabled": true,
       "Comment": "",
@@ -39,8 +39,8 @@
       "PortAutoAllocationEnabled": false,
       "Port": 51000,
       "IsThreadSafeMode": true,
-      "UseRemoteEngineTelemetrySetting": false,
-      "LogLevel": "Trace",
+      "UseRemoteEngineTelemetrySetting": true,
+      "LogLevel": "Information",
       "Protocol": 0,
       "SpecifyCertificate": false,
       "CertificateFile": "",
@@ -51,37 +51,48 @@
   ],
   "Controllers": [
     {
-      "Id": "e925c486-5732-4a19-ad0c-04b3224d1fcf",
+      "Id": "565da054-0b5f-42e1-9bc7-30baacf48b91",
       "Name": "GeneralPurposeController",
       "IsEnabled": true,
       "Comment": "",
       "ORiN3ObjectName": "GeneralPurposeController",
       "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Controller.GeneralPurposeController, ORiN3.Provider.ORiNConsortium.Mock",
-      "Option": "{\u0022@Version\u0022:\u00221.0.85\u0022}",
+      "Option": "{\u0022@Version\u0022:\u00221.0.0\u0022}",
       "Tag": ""
     }
   ],
   "Modules": [],
   "Variables": [
     {
-      "Id": "ae2aca15-4a5e-4164-a7c0-106a57b72054",
+      "Id": "959ed94f-a656-4f03-9327-60fdec291a79",
       "Name": "R1",
       "IsEnabled": true,
       "Comment": "",
       "ORiN3ObjectName": "R1",
       "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Variable.PulseWaveBoolVariable, ORiN3.Provider.ORiNConsortium.Mock",
-      "Option": "{\u0022@Version\u0022:\u00221.0.85\u0022}",
+      "Option": "{\u0022@Version\u0022:\u00221.0.0\u0022}",
       "ValueType": 0,
       "Tag": ""
     },
     {
-      "Id": "f2770a1c-7b34-4158-b8aa-ce77f73ea70b",
+      "Id": "b0457ea0-66ad-4816-9968-ba6321c54e33",
       "Name": "D1",
       "IsEnabled": true,
       "Comment": "",
       "ORiN3ObjectName": "D1",
-      "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Variable.PulseWaveDoubleVariable, ORiN3.Provider.ORiNConsortium.Mock",
-      "Option": "{\u0022@Version\u0022:\u00221.0.85\u0022,\u0022Value1\u0022:\u00220.2\u0022,\u0022Value2\u0022:\u00220.8\u0022}",
+      "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Variable.SineWaveDoubleVariable, ORiN3.Provider.ORiNConsortium.Mock",
+      "Option": "{\u0022@Version\u0022:\u00221.0.0\u0022,\u0022Vertical Offset\u0022:\u00220.9\u0022,\u0022Amplitude\u0022:\u00220.1\u0022,\u0022Frequency\u0022:10000000}",
+      "ValueType": 10,
+      "Tag": ""
+    },
+    {
+      "Id": "3aa5159c-dfcf-4b7a-b426-b633bfc845d7",
+      "Name": "D2",
+      "IsEnabled": true,
+      "Comment": "",
+      "ORiN3ObjectName": "D2",
+      "Type": "ORiN3.Provider.ORiNConsortium.Mock.O3Object.Variable.SineWaveDoubleVariable, ORiN3.Provider.ORiNConsortium.Mock",
+      "Option": "{\u0022@Version\u0022:\u00221.0.0\u0022,\u0022Vertical Offset\u0022:\u00220.9\u0022,\u0022Amplitude\u0022:\u00220.1\u0022,\u0022Frequency\u0022:10000000}",
       "ValueType": 10,
       "Tag": ""
     }
