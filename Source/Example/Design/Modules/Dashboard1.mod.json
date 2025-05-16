@@ -186,6 +186,24 @@
       "ClassName": "",
       "ContextMenu": "",
       "TypeFullName": "Codeer.LowCode.Bindings.ApexCharts.Designs.ApexRadialChartFieldDesign"
+    },
+    {
+      "Name": "Meter",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Bindings.ORiN3.Designs.MeterFieldDesign"
+    },
+    {
+      "Name": "Meter1",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Bindings.ORiN3.Designs.MeterFieldDesign"
+    },
+    {
+      "Name": "Meter2",
+      "ClassName": "",
+      "ContextMenu": "",
+      "TypeFullName": "Codeer.LowCode.Bindings.ORiN3.Designs.MeterFieldDesign"
     }
   ],
   "UserWriteCondition": {
@@ -203,7 +221,7 @@
   "DetailLayouts": {
     "": {
       "OnBeforeInitialization": "",
-      "OnAfterInitialization": "",
+      "OnAfterInitialization": "DetailLayoutDesign_OnAfterInitialization",
       "DataOnlyFields": [],
       "ClassName": "",
       "Color": "",
@@ -336,17 +354,45 @@
                     },
                     {
                       "Layout": {
-                        "FieldName": "ApexRadialChart1",
+                        "FieldName": "Meter",
                         "FontFamily": "",
-                        "Color": "",
-                        "BackgroundColor": "",
+                        "Color": "#3EFF3E",
+                        "BackgroundColor": "#191A1E",
                         "Name": "",
                         "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
                       },
-                      "Left": 134,
-                      "Top": 122,
-                      "Width": 157,
-                      "Height": 101
+                      "Left": 16,
+                      "Top": 205,
+                      "Width": 162,
+                      "Height": 114
+                    },
+                    {
+                      "Layout": {
+                        "FieldName": "Meter1",
+                        "FontFamily": "",
+                        "Color": "#47E0F5",
+                        "BackgroundColor": "#191A1E",
+                        "Name": "",
+                        "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                      },
+                      "Left": 467,
+                      "Top": 46,
+                      "Width": 162,
+                      "Height": 114
+                    },
+                    {
+                      "Layout": {
+                        "FieldName": "Meter2",
+                        "FontFamily": "",
+                        "Color": "#FF0000",
+                        "BackgroundColor": "#4580AB",
+                        "Name": "",
+                        "TypeFullName": "Codeer.LowCode.Blazor.Repository.Design.FieldLayoutDesign"
+                      },
+                      "Left": 348,
+                      "Top": 192,
+                      "Width": 162,
+                      "Height": 114
                     }
                   ],
                   "IsBordered": false,
