@@ -28,8 +28,3 @@ In actual use, you'll typically bind ORiN3 data sources to visual components in 
 
 ## License
 This library is distributed under the **MIT License**. You are free to use, modify, and distribute it for commercial and non-commercial purposes.
-
-## GitHub Repository
-Full source code and documentation are available on GitHub. Contributions, bug reports, and feature requests are welcome.
-
-🔗 **GitHub:** [Codeer.LowCode.Bindings.ORiN3 Repository](https://github.com/Codeer-Software/Codeer.LowCode.Bindings.ORiN3)
