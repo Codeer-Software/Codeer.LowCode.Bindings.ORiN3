@@ -17,10 +17,6 @@ With this library, you can access any device that has an ORiN3 provider, send an
 ## Installation
 TODO
 
-```bash
-dotnet add package Codeer.LowCode.Bindings.ORiN3
-```
-
 Or search for `Codeer.LowCode.Bindings.ORiN3` in the **NuGet Package Manager** in Visual Studio.
 
 > Note: You must have the ORiN3 Remote Engine and device-specific ORiN3 providers installed and configured on your system.
